@@ -14,8 +14,24 @@ namespace cis237assignment2
         private int mazeSizeInt;
         private int startXInt = 1;
         private int startYInt = 1;
+        private int indexXInt;
+        private int indexYInt;
 
         MazeTile[,] mazeLayout;
+        char[,] preDefinedMaze = 
+            { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
+            { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
+            { '#', '.', '#', '.', '#', '.', '#', '#', '#', '#', '.', '#' },
+            { '#', '#', '#', '.', '#', '.', '.', '.', '.', '#', '.', '#' },
+            { '#', '.', '.', '.', '.', '#', '#', '#', '.', '#', '.', '!' },
+            { '#', '#', '#', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
+            { '#', '.', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
+            { '#', '#', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
+            { '#', '.', '.', '.', '.', '.', '.', '.', '.', '#', '.', '#' },
+            { '#', '#', '#', '#', '#', '#', '.', '#', '#', '#', '.', '#' },
+            { '#', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#' },
+            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };
+
 
         #endregion
 
@@ -28,7 +44,7 @@ namespace cis237assignment2
         /// </summary>
         public Maze()
         {
-
+            ReadMaze();
         }
 
         #endregion
@@ -61,12 +77,56 @@ namespace cis237assignment2
             }
         }
 
+        public int MazeSize
+        {
+            get
+            {
+                return mazeSizeInt;
+            }
+        }
+
         #endregion
 
 
 
-        #region Methods
+        #region Private Methods
+
+        private void ReadMaze()
+        {
+            indexXInt = 0;
+            indexYInt = 0;
+            mazeSizeInt = preDefinedMaze.GetLength(0);
+            mazeLayout = new MazeTile[mazeSizeInt, mazeSizeInt];
+
+            while (indexYInt < mazeSizeInt)
+            {
+                // If not yet at end of horizontal, add 1 to X. Otherwise reset x and add 1 to Y.
+                if (indexXInt < mazeSizeInt)
+                {
+                    // Creates a full MazeTile spot based on the given ID of predefined maze spot.
+                    mazeLayout[indexYInt, indexXInt] = new MazeTile(preDefinedMaze[indexYInt, indexXInt]);
+                    indexXInt++;
+                }
+                else
+                {
+                    indexXInt = 0;
+                    indexYInt++;
+                }
+            }
+        }
 
         #endregion
+
+
+
+        #region Public Methods
+
+        public char DisplayMazeTile(int currentY, int currentX)
+        {
+            return mazeLayout[currentY, currentX].Display;
+        }
+
+        #endregion
+
     }
 }

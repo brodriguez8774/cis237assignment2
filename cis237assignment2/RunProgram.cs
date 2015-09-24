@@ -8,30 +8,12 @@ namespace cis237assignment2
 {
     class RunProgram
     {
+        /*
         /// <summary>
         /// Starting Coordinates.
         /// </summary>
         const int X_START = 1;
         const int Y_START = 1;
-
-        ///<summary>
-        /// The first maze that needs to be solved.
-        /// Note: You may want to make a smaller version to test and debug with.
-        /// You don't have to, but it might make your life easier.
-        /// </summary>
-        char[,] maze1 = 
-            { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
-            { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
-            { '#', '.', '#', '.', '#', '.', '#', '#', '#', '#', '.', '#' },
-            { '#', '#', '#', '.', '#', '.', '.', '.', '.', '#', '.', '#' },
-            { '#', '.', '.', '.', '.', '#', '#', '#', '.', '#', '.', '.' },
-            { '#', '#', '#', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
-            { '#', '.', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
-            { '#', '#', '.', '#', '.', '#', '.', '#', '.', '#', '.', '#' },
-            { '#', '.', '.', '.', '.', '.', '.', '.', '.', '#', '.', '#' },
-            { '#', '#', '#', '#', '#', '#', '.', '#', '#', '#', '.', '#' },
-            { '#', '.', '.', '.', '.', '.', '.', '#', '.', '.', '.', '#' },
-            { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' } };
 
         private void MazeSolver()
         {
@@ -70,5 +52,43 @@ namespace cis237assignment2
             //Write code her to create a transposed maze.
             return new char[1, 1];
         }
+         */
+
+        #region Variables
+
+        bool runProgramBool;
+
+        #endregion
+
+
+
+        #region Constructor
+
+        public RunProgram()
+        {
+            Testing newTest = new Testing();
+            newTest.BruteForceTesting();
+        }
+
+        #endregion
+
+
+
+        #region Properties
+
+        #endregion
+
+
+
+        #region Methods
+
+
+
+        #endregion
+
+
+
+
+
     }
 }

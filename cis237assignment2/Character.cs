@@ -14,10 +14,10 @@ namespace cis237assignment2
         Maze maze;
 
         // Working Variables
-        
+
         private int currentXInt;
         private int currentYInt;
-        private int testedValueIndexInt;
+        private int testedValueInt;
 
         #endregion
 
@@ -52,7 +52,7 @@ namespace cis237assignment2
             }
         }
 
-        
+
 
         public int CurrentX
         {
@@ -74,21 +74,8 @@ namespace cis237assignment2
 
 
 
-        #region Methods
+        #region PrivateMethods
 
-
-        private void MoveCharacter(int testedValue, int currentX, int currentY)
-        {
-            // If not yet at the exit.
-            if (maze.MazeLayout[currentXInt, currentYInt].ID != "Exit")
-            {
-                AttemptRight(testedValue, currentX, currentY);
-            }
-            else
-            {
-                // Victory!
-            }
-        }
 
         private void AttemptRight(int testedValue, int currentX, int currentY)
         {
@@ -184,27 +171,25 @@ namespace cis237assignment2
             }
         }
 
+        #endregion
 
-        private void MoveRight()
+        #region Public Methods
+
+
+        public void MoveCharacter(int testedValue, int currentX, int currentY)
         {
-
-        }
-
-        private void MoveDown()
-        {
-
-        }
-
-        private void MoveLeft()
-        {
-
-        }
-
-        private void MoveDown()
-        {
-
+            // If not yet at the exit.
+            if (maze.MazeLayout[currentX, currentY].ID != '!')
+            {
+                AttemptRight(testedValue, currentX, currentY);
+            }
+            else
+            {
+                // Victory!
+            }
         }
 
         #endregion
+
     }
 }

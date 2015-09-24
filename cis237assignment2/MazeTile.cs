@@ -10,7 +10,7 @@ namespace cis237assignment2
     {
         #region Variables
 
-        private string tileIDString;
+        private char tileIDChar;
         private char tileDisplayChar;
         private bool tileMovementBool;
         private int tileTestedInt;
@@ -30,9 +30,9 @@ namespace cis237assignment2
         }
 
 
-        public MazeTile(char tileDisplay)
+        public MazeTile(char tileID)
         {
-            Display = tileDisplay;
+            ID = tileID;
 
             SetTileProperties();
         }
@@ -43,23 +43,23 @@ namespace cis237assignment2
 
         #region Properties
 
-        public char Display
+        public char ID
         {
             set
             {
-                tileDisplayChar = value;
+                tileIDChar = value;
             }
             get
             {
-                return tileDisplayChar;
+                return tileIDChar;
             }
         }
 
-        public string ID
+        public char Display
         {
             get
             {
-                return tileIDString;
+                return tileDisplayChar;
             }
         }
 
@@ -83,10 +83,10 @@ namespace cis237assignment2
 
 
 
-        #region Methods
+        #region Private Methods
 
         /// <summary>
-        /// Determines properties of tile based on DisplayChar.
+        /// Determines properties of tile based on Tile's ID.
         /// </summary>
         private void SetTileProperties()
         {
@@ -96,33 +96,33 @@ namespace cis237assignment2
 
         private void ReadTileType()
         {
-            switch (tileDisplayChar)
+            switch (tileIDChar)
             {
                 case '#':
-                    tileIDString = "Wall";
+                    tileDisplayChar = '#';
                     tileMovementBool = false;
                     break;
 
                 case '.':
-                    tileIDString = "Floor";
+                    tileDisplayChar = '.';
                     tileMovementBool = true;
                     tileTestedInt = 0;
                     break;
 
                 case 'X':
-                    tileIDString = "Floor";
+                    tileDisplayChar = 'X';
                     tileMovementBool = true;
                     tileTestedInt = 1;
                     break;
 
                 case 'O':
-                    tileIDString = "Floor";
+                    tileDisplayChar = 'O';
                     tileMovementBool = false;
                     tileTestedInt = 2;
                     break;
 
                 case '!':
-                    tileIDString = "Exit";
+                    tileDisplayChar = '.';
                     tileMovementBool = true;
                     tileTestedInt = 0;
                     break;
@@ -130,5 +130,14 @@ namespace cis237assignment2
         }
 
         #endregion
+
+
+
+        #region Public Methods
+
+        
+
+        #endregion
+
     }
 }
