@@ -10,10 +10,12 @@ namespace cis237assignment2
     {
         #region Variables
 
+        // Classes
+
         // Working Variables
         private int mazeSizeInt;
-        private int startXInt = 1;
-        private int startYInt = 1;
+        private int startingXInt = 1;
+        private int startingYInt = 1;
         private int indexXInt;
         private int indexYInt;
 
@@ -65,7 +67,7 @@ namespace cis237assignment2
         {
             get
             {
-                return startXInt;
+                return startingXInt;
             }
         }
 
@@ -73,7 +75,7 @@ namespace cis237assignment2
         {
             get
             {
-                return startYInt;
+                return startingYInt;
             }
         }
 
@@ -121,9 +123,60 @@ namespace cis237assignment2
 
         #region Public Methods
 
+        /// <summary>
+        /// Gets the TileDisplay property of current index.
+        /// </summary>
+        /// <param name="currentY">Current Y index.</param>
+        /// <param name="currentX">Current X Index.</param>
+        /// <returns>The DisplayChar of the index.</returns>
         public char DisplayMazeTile(int currentY, int currentX)
         {
             return mazeLayout[currentY, currentX].Display;
+        }
+
+        /// <summary>
+        /// Creates string to display current maze, including player location and status.
+        /// </summary>
+        /// <param name="currentMaze">The current Maze to navigate.</param>
+        /// <param name="currentPlayerX">Player's current X index.</param>
+        /// <param name="currentPlayerY">Player's current Y index.</param>
+        /// <returns>String composed of maze visual.</returns>
+        public string MazeToString(Maze currentMaze, int currentPlayerY, int currentPlayerX)
+        {
+            indexXInt = 0;
+            indexYInt = 0;
+            string displayString = "";
+
+            Character player = new Character(currentMaze, startingYInt, startingXInt);
+
+
+            // While y axis not = max maze size.
+            while (indexYInt < mazeSizeInt)
+            {
+                // While x axis not = max maze size.
+                if (indexXInt < mazeSizeInt)
+                {
+                    // If spot = index character is on, display character instead.
+                    if (player.CurrentX == indexXInt && player.CurrentY == indexYInt)
+                    {
+                        displayString += player.CharacterDisplay;
+                        indexXInt++;
+                    }
+                    else
+                    {
+                        displayString += DisplayMazeTile(indexYInt, indexXInt);
+                        indexXInt++;
+                    }
+                }
+                else
+                {
+                    displayString += Environment.NewLine;
+                    indexXInt = 0;
+                    indexYInt++;
+                }
+            }
+
+            return displayString;
         }
 
         #endregion

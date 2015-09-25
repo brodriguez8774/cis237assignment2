@@ -12,12 +12,16 @@ namespace cis237assignment2
 
         // Classes
         Maze maze;
+        UserInterface userInterface = new UserInterface();
 
         // Working Variables
 
+        private int startingXInt;
+        private int startingYInt;
         private int currentXInt;
         private int currentYInt;
         private int testedValueInt;
+        private char tileDisplayChar = '*';
 
         #endregion
 
@@ -33,9 +37,13 @@ namespace cis237assignment2
 
         }
 
-        public Character(Maze selectedMaze)
+        public Character(Maze currentMaze, int startingX, int startingY)
         {
-            Maze = selectedMaze;
+            Maze = currentMaze;
+            StartingX = startingX;
+            StartingY = startingY;
+            currentXInt = startingXInt;
+            currentYInt = startingYInt;
         }
 
         #endregion
@@ -52,7 +60,21 @@ namespace cis237assignment2
             }
         }
 
+        public int StartingX
+        {
+            set
+            {
+                startingXInt = value;
+            }
+        }
 
+        public int StartingY
+        {
+            set
+            {
+                startingYInt = value;
+            }
+        }
 
         public int CurrentX
         {
@@ -70,6 +92,14 @@ namespace cis237assignment2
             }
         }
 
+        public char CharacterDisplay
+        {
+            get
+            {
+                return tileDisplayChar;
+            }
+        }
+
         #endregion
 
 
@@ -77,82 +107,82 @@ namespace cis237assignment2
         #region PrivateMethods
 
 
-        private void AttemptRight(int testedValue, int currentX, int currentY)
+        private void AttemptRight(int testedValue, int currentY, int currentX)
         {
             // If tile can be moved into.
-            if (maze.MazeLayout[currentX + 1, currentY].Movement)
+            if (maze.MazeLayout[currentY, currentX + 1].Movement)
             {
                 // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentX + 1, currentY].Tested == testedValue)
+                if (maze.MazeLayout[currentY, currentX + 1].Tested == testedValue)
                 {
                     // If move successful, try again with new space.
-                    MoveCharacter(testedValue, currentX + 1, currentY);
+                    MoveCharacter(0, currentY, currentX + 1);
                 }
                 else
                 {
-                    AttemptDown(testedValue, currentX, currentY);
+                    AttemptDown(testedValue, currentY, currentX);
                 }
             }
             else
             {
-                AttemptDown(testedValue, currentX, currentY);
+                AttemptDown(testedValue, currentY, currentX);
             }
         }
 
-        private void AttemptDown(int testedValue, int currentX, int currentY)
+        private void AttemptDown(int testedValue, int currentY, int currentX)
         {
             // If tile can be moved into.
-            if (maze.MazeLayout[currentX, currentY - 1].Movement)
+            if (maze.MazeLayout[currentY + 1, currentX].Movement)
             {
                 // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentX, currentY - 1].Tested == testedValue)
+                if (maze.MazeLayout[currentY + 1, currentX].Tested == testedValue)
                 {
                     // If move successful, try again with new space.
-                    MoveCharacter(testedValue, currentX, currentY - 1);
+                    MoveCharacter(0, currentY + 1, currentX);
                 }
                 else
                 {
-                    AttemptLeft(testedValue, currentX, currentY);
+                    AttemptLeft(testedValue, currentY, currentX);
                 }
             }
             else
             {
-                AttemptLeft(testedValue, currentX, currentY);
+                AttemptLeft(testedValue, currentY, currentX);
             }
         }
 
-        private void AttemptLeft(int testedValue, int currentX, int currentY)
+        private void AttemptLeft(int testedValue, int currentY, int currentX)
         {
             // If tile can be moved into.
-            if (maze.MazeLayout[currentX - 1, currentY].Movement)
+            if (maze.MazeLayout[currentY, currentX - 1].Movement)
             {
                 // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentX - 1, currentY].Tested == testedValue)
+                if (maze.MazeLayout[currentY, currentX - 1].Tested == testedValue)
                 {
                     // If move successful, try again with new space.
-                    MoveCharacter(testedValue, currentX - 1, currentY);
+                    MoveCharacter(0, currentY, currentX - 1);
                 }
                 else
                 {
-                    AttemptUp(testedValue, currentX, currentY);
+                    AttemptUp(testedValue, currentY, currentX);
                 }
             }
             else
             {
-                AttemptUp(testedValue, currentX, currentY);
+                AttemptUp(testedValue, currentY, currentX);
             }
         }
 
-        private void AttemptUp(int testedValue, int currentX, int currentY)
+        private void AttemptUp(int testedValue, int currentY, int currentX)
         {
             // If tile can be moved into.
-            if (maze.MazeLayout[currentX, currentY + 1].Movement)
+            if (maze.MazeLayout[currentY - 1, currentX].Movement)
             {
                 // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentX, currentY + 1].Tested == testedValue)
+                if (maze.MazeLayout[currentY - 1, currentX].Tested == testedValue)
                 {
                     // If move successful, try again with new space.
-                    MoveCharacter(testedValue, currentX, currentY + 1);
+                    MoveCharacter(0, currentY - 1, currentX);
                 }
                 /* Unecessary lines?
             // If no moves can be made on first pass, incriment tested index to go backward spaces.
@@ -175,9 +205,9 @@ namespace cis237assignment2
 
         #region Public Methods
 
-
-        public void MoveCharacter(int testedValue, int currentX, int currentY)
+        public void MoveCharacter(int testedValue, int currentY, int currentX)
         {
+            userInterface.DisplayMaze(maze.MazeToString(maze, currentX, currentY));
             // If not yet at the exit.
             if (maze.MazeLayout[currentX, currentY].ID != '!')
             {

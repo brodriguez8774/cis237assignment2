@@ -14,14 +14,14 @@ namespace cis237assignment2
         /// Basic tests for fundamental class functionality.
         /// Starts with the absolute minimum and slowly expands after pass.
         /// </summary>
-        public void BruteForceTesting()
+        public void ForceTesting()
         {
 
             #region MazeTileTest
 
             Console.WriteLine(Environment.NewLine +
                 "******************************" + Environment.NewLine +
-                "Brute Test for Base MazeTile" + Environment.NewLine +
+                "Basic Test for Base MazeTile" + Environment.NewLine +
                 "******************************" + Environment.NewLine);
             Console.WriteLine();
 
@@ -69,7 +69,7 @@ namespace cis237assignment2
 
             Console.WriteLine(Environment.NewLine +
                 "******************************" + Environment.NewLine +
-                "Brute Test for Maze Creation" + Environment.NewLine +
+                "Basic Test for Maze Creation" + Environment.NewLine +
                 "******************************" + Environment.NewLine);
             Console.WriteLine();
 
@@ -104,7 +104,7 @@ namespace cis237assignment2
 
             Console.WriteLine(Environment.NewLine +
                 "******************************" + Environment.NewLine +
-                "Brute Test forMaze Transposition" + Environment.NewLine +
+                "Basic Test for Maze Transposition" + Environment.NewLine +
                 "******************************" + Environment.NewLine);
             Console.WriteLine();
 
@@ -133,18 +133,78 @@ namespace cis237assignment2
 
 
 
-
             #region CharacterDisplayTest
 
             Console.WriteLine(Environment.NewLine +
                 "******************************" + Environment.NewLine +
-                "Brute Test forMaze Transposition" + Environment.NewLine +
+                "Basic Test for Maze Transposition" + Environment.NewLine +
                 "******************************" + Environment.NewLine);
             Console.WriteLine();
 
+            testMaze = new Maze();
+            currentX = 0;
+            currentY = 0;
+            displayString = "";
+
+            int startingX = 1;
+            int startingY = 1;
+            Character solver = new Character(testMaze, startingX, startingY);
+            
+
+
+            while (currentY < testMaze.MazeSize)
+            {
+
+                if (currentX < testMaze.MazeSize)
+                {
+                    // If spot = spot character is on, display character instead.
+                    if (solver.CurrentX == currentX && solver.CurrentY == currentY)
+                    {
+                        displayString += solver.CharacterDisplay;
+                        currentX++;
+                    }
+                    else
+                    {
+                        displayString += testMaze.DisplayMazeTile(currentY, currentX);
+                        currentX++;
+                    }
+                }
+                else
+                {
+                    displayString += Environment.NewLine;
+                    currentX = 0;
+                    currentY++;
+                }
+            }
+
+            Console.WriteLine(displayString);
+
+            #endregion
+
+
+
+            #region CharacterMovementTest
+
+            Console.WriteLine(Environment.NewLine +
+                "******************************" + Environment.NewLine +
+                "Basic Test for --" + Environment.NewLine +
+                "******************************" + Environment.NewLine);
+            Console.WriteLine();
+
+            testMaze = new Maze();
+            currentX = 0;
+            currentY = 0;
+            displayString = "";
+
+            startingX = 1;
+            startingY = 1;
+            solver = new Character(testMaze, startingX, startingY);
 
 
             #endregion
+
+
+
         }
 
         public void CaseTesting()

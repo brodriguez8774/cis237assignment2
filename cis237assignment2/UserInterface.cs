@@ -38,7 +38,10 @@ namespace cis237assignment2
 
         #region Methods
 
-        
+        public void DisplayMaze(string mazeDisplayString)
+        {
+            Console.WriteLine(Environment.NewLine + mazeDisplayString + Environment.NewLine);
+        }
 
         #endregion
     }

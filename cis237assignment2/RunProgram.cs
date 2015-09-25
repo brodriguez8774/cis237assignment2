@@ -56,7 +56,14 @@ namespace cis237assignment2
 
         #region Variables
 
+        // Classes
+        Maze maze;
+        Character player;
+        UserInterface userInterface;
+
         bool runProgramBool;
+        int indexXInt;
+        int indexYInt;
 
         #endregion
 
@@ -66,8 +73,16 @@ namespace cis237assignment2
 
         public RunProgram()
         {
-            Testing newTest = new Testing();
-            newTest.BruteForceTesting();
+            //maze = new Maze();
+            //player = new Character(maze, 1, 1);
+
+            //player.MoveCharacter(0, maze.StartingY, maze.StartingX);
+
+
+            userInterface = new UserInterface();
+
+             Testing newTest = new Testing();
+             newTest.ForceTesting();
         }
 
         #endregion
@@ -82,7 +97,46 @@ namespace cis237assignment2
 
         #region Methods
 
+        public void DisplayMove(Maze currentMaze, int currentPlayerX, int currentPlayerY)
+        {
+            maze = currentMaze;
+            indexXInt = 0;
+            indexYInt = 0;
+            string displayString = "";
 
+            int startingX = 1;
+            int startingY = 1;
+            Character player = new Character(currentMaze, startingX, startingY);
+
+
+            // While y axis not = max maze size.
+            while (indexYInt < maze.MazeSize)
+            {
+                // While x axis not = max maze size.
+                if (indexXInt < maze.MazeSize)
+                {
+                    // If spot = index character is on, display character instead.
+                    if (player.CurrentX == indexXInt && player.CurrentY == indexYInt)
+                    {
+                        displayString += player.CharacterDisplay;
+                        indexXInt++;
+                    }
+                    else
+                    {
+                        displayString += maze.DisplayMazeTile(indexYInt, indexXInt);
+                        indexXInt++;
+                    }
+                }
+                else
+                {
+                    displayString += Environment.NewLine;
+                    indexXInt = 0;
+                    indexYInt++;
+                }
+            }
+
+            userInterface.DisplayMaze(displayString);
+        }
 
         #endregion
 
