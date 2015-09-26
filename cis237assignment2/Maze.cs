@@ -6,11 +6,15 @@ using System.Threading.Tasks;
 
 namespace cis237assignment2
 {
+    /// <summary>
+    /// Handles all properties and creation of full mazes.
+    /// </summary>
     class Maze
     {
         #region Variables
 
         // Classes
+        Character player;
 
         // Working Variables
         private int mazeSizeInt;
@@ -18,8 +22,11 @@ namespace cis237assignment2
         private int startingYInt = 1;
         private int indexXInt;
         private int indexYInt;
+        private int waitTimerInt = 500;
 
         MazeTile[,] mazeLayout;
+        MazeTile[,] tempMaze;
+
         char[,] preDefinedMaze = 
             { { '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
             { '#', '.', '.', '.', '#', '.', '.', '.', '.', '.', '.', '#' },
@@ -47,6 +54,7 @@ namespace cis237assignment2
         public Maze()
         {
             ReadMaze();
+            player = new Character(this, startingYInt, startingXInt);
         }
 
         #endregion
@@ -106,7 +114,7 @@ namespace cis237assignment2
                 if (indexXInt < mazeSizeInt)
                 {
                     // Creates a full MazeTile spot based on the given ID of predefined maze spot.
-                    mazeLayout[indexYInt, indexXInt] = new MazeTile(preDefinedMaze[indexYInt, indexXInt]);
+                    mazeLayout[indexXInt, indexYInt] = new MazeTile(preDefinedMaze[indexYInt, indexXInt]);
                     indexXInt++;
                 }
                 else
@@ -114,6 +122,28 @@ namespace cis237assignment2
                     indexXInt = 0;
                     indexYInt++;
                 }
+            }
+
+            tempMaze = mazeLayout;
+        }
+
+        /// <summary>
+        /// Transposes maze accros the diagonal.
+        /// </summary>
+        private void TransposeMaze()
+        {
+            indexXInt = 0;
+            indexYInt = 0;
+
+            while (indexYInt < mazeSizeInt)
+            {
+                if (indexXInt < mazeSizeInt)
+                {
+                    mazeLayout[indexYInt, indexXInt] = tempMaze[indexXInt, indexYInt];
+                    indexXInt++;
+                }
+                indexXInt = 0;
+                indexYInt++;
             }
         }
 
@@ -138,8 +168,8 @@ namespace cis237assignment2
         /// Creates string to display current maze, including player location and status.
         /// </summary>
         /// <param name="currentMaze">The current Maze to navigate.</param>
-        /// <param name="currentPlayerX">Player's current X index.</param>
         /// <param name="currentPlayerY">Player's current Y index.</param>
+        /// <param name="currentPlayerX">Player's current X index.</param>
         /// <returns>String composed of maze visual.</returns>
         public string MazeToString(Maze currentMaze, int currentPlayerY, int currentPlayerX)
         {
@@ -147,8 +177,7 @@ namespace cis237assignment2
             indexYInt = 0;
             string displayString = "";
 
-            Character player = new Character(currentMaze, startingYInt, startingXInt);
-
+            Task.Delay(waitTimerInt).Wait();
 
             // While y axis not = max maze size.
             while (indexYInt < mazeSizeInt)
@@ -157,7 +186,7 @@ namespace cis237assignment2
                 if (indexXInt < mazeSizeInt)
                 {
                     // If spot = index character is on, display character instead.
-                    if (player.CurrentX == indexXInt && player.CurrentY == indexYInt)
+                    if (currentPlayerX == indexXInt && currentPlayerY == indexYInt)
                     {
                         displayString += player.CharacterDisplay;
                         indexXInt++;
@@ -177,6 +206,28 @@ namespace cis237assignment2
             }
 
             return displayString;
+        }
+
+        /// <summary>
+        /// Updates specific maze tile for player interaction.
+        /// </summary>
+        /// <param name="currentY">Player's current Y coordinate.</param>
+        /// <param name="currentX">Player's current X coordinate.</param>
+        public void UpdateMazeTile(int currentY, int currentX)
+        {
+            // If tile has not been tested (walked on) yet.
+            if (mazeLayout[currentY, currentX].Tested == 0)
+            {
+                mazeLayout[currentY, currentX] = new MazeTile('X');
+            }
+            else
+            {
+                // If tile has been tested (walked on) once before.
+                if (mazeLayout[currentY, currentX].Tested == 1)
+                {
+                    mazeLayout[currentY, currentX] = new MazeTile('O');
+                }
+            }
         }
 
         #endregion

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace cis237assignment2
 {
+    /// <summary>
+    /// Constructs each individual maze tile's properties.
+    /// </summary>
     class MazeTile
     {
         #region Variables
@@ -13,7 +16,7 @@ namespace cis237assignment2
         private char tileIDChar;
         private char tileDisplayChar;
         private bool tileMovementBool;
-        private int tileTestedInt;
+        private int tileTestedInt;          // "Is tile tested" value. 0 for no. 1 for tested but retracable (can still be walked over). 2 for tested dead end.
 
         #endregion
 
@@ -29,7 +32,10 @@ namespace cis237assignment2
 
         }
 
-
+        /// <summary>
+        /// Constructor which sets tile properties based on ID.
+        /// </summary>
+        /// <param name="tileID">The ID of tile to create.</param>
         public MazeTile(char tileID)
         {
             ID = tileID;
@@ -90,12 +96,6 @@ namespace cis237assignment2
         /// </summary>
         private void SetTileProperties()
         {
-            ReadTileType();
-        }
-
-
-        private void ReadTileType()
-        {
             switch (tileIDChar)
             {
                 case '#':
@@ -128,14 +128,6 @@ namespace cis237assignment2
                     break;
             }
         }
-
-        #endregion
-
-
-
-        #region Public Methods
-
-        
 
         #endregion
 

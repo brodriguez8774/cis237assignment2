@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace cis237assignment2
 {
+    /// <summary>
+    /// Used exclusively for testing of other classes.
+    /// </summary>
     class Testing
     {
         #region Testing

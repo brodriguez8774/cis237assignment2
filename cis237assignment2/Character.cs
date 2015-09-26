@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace cis237assignment2
 {
+    /// <summary>
+    /// Character (player) which moves through and solves the maze.
+    /// </summary>
     class Character
     {
         #region Variables
@@ -15,12 +18,10 @@ namespace cis237assignment2
         UserInterface userInterface = new UserInterface();
 
         // Working Variables
-
         private int startingXInt;
         private int startingYInt;
         private int currentXInt;
         private int currentYInt;
-        private int testedValueInt;
         private char tileDisplayChar = '*';
 
         #endregion
@@ -37,7 +38,13 @@ namespace cis237assignment2
 
         }
 
-        public Character(Maze currentMaze, int startingX, int startingY)
+        /// <summary>
+        /// Sets up the initial properties of the player character.
+        /// </summary>
+        /// <param name="currentMaze">Current maze of which the player is to solve.</param>
+        /// <param name="startingX">The starting X coordinates of player.</param>
+        /// <param name="startingY">The starting Y coordinates of player.</param>
+        public Character(Maze currentMaze, int startingY, int startingX)
         {
             Maze = currentMaze;
             StartingX = startingX;
@@ -106,22 +113,22 @@ namespace cis237assignment2
 
         #region PrivateMethods
 
-
+        /// <summary>
+        /// Checks if player can move one space to the right.
+        /// </summary>
+        /// <param name="testedValue">"Is tile tested" value. See maze property class for details.</param>
+        /// <param name="currentY">Player's current Y index.</param>
+        /// <param name="currentX">Player's current X index.</param>
         private void AttemptRight(int testedValue, int currentY, int currentX)
         {
-            // If tile can be moved into.
-            if (maze.MazeLayout[currentY, currentX + 1].Movement)
+            
+            if (maze.MazeLayout[currentY, currentX + 1].Movement &&             // If tile can be moved into.
+            maze.MazeLayout[currentY, currentX + 1].Tested == testedValue)      // Puts priority on untested tiles.
             {
-                // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentY, currentX + 1].Tested == testedValue)
-                {
-                    // If move successful, try again with new space.
-                    MoveCharacter(0, currentY, currentX + 1);
-                }
-                else
-                {
-                    AttemptDown(testedValue, currentY, currentX);
-                }
+                // If move successful, try again with new space.
+                currentXInt = currentX + 1;
+                maze.UpdateMazeTile(currentY, currentX);
+                MoveCharacter(0, currentY, currentX + 1);
             }
             else
             {
@@ -129,21 +136,21 @@ namespace cis237assignment2
             }
         }
 
+        /// <summary>
+        /// Checks if player can move one space down.
+        /// </summary>
+        /// <param name="testedValue">"Is tile tested" value. See maze property class for details.</param>
+        /// <param name="currentY">Player's current Y index.</param>
+        /// <param name="currentX">Player's current X index.</param>
         private void AttemptDown(int testedValue, int currentY, int currentX)
         {
-            // If tile can be moved into.
-            if (maze.MazeLayout[currentY + 1, currentX].Movement)
+            if (maze.MazeLayout[currentY + 1, currentX].Movement &&             // If tile can be moved into.
+            maze.MazeLayout[currentY + 1, currentX].Tested == testedValue)      // Puts priority on untested tiles.
             {
-                // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentY + 1, currentX].Tested == testedValue)
-                {
-                    // If move successful, try again with new space.
-                    MoveCharacter(0, currentY + 1, currentX);
-                }
-                else
-                {
-                    AttemptLeft(testedValue, currentY, currentX);
-                }
+                // If move successful, try again with new space.
+                currentYInt = currentY + 1;
+                maze.UpdateMazeTile(currentY, currentX);
+                MoveCharacter(0, currentY + 1, currentX);
             }
             else
             {
@@ -151,21 +158,21 @@ namespace cis237assignment2
             }
         }
 
+        /// <summary>
+        /// Checks if player can move one space to the left.
+        /// </summary>
+        /// <param name="testedValue">"Is tile tested" value. See maze property class for details.</param>
+        /// <param name="currentY">Player's current Y index.</param>
+        /// <param name="currentX">Player's current X index.</param>
         private void AttemptLeft(int testedValue, int currentY, int currentX)
         {
-            // If tile can be moved into.
-            if (maze.MazeLayout[currentY, currentX - 1].Movement)
+            if (maze.MazeLayout[currentY, currentX - 1].Movement &&             // If tile can be moved into.
+            maze.MazeLayout[currentY, currentX - 1].Tested == testedValue)      // Puts priority on untested tiles.
             {
-                // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentY, currentX - 1].Tested == testedValue)
-                {
-                    // If move successful, try again with new space.
-                    MoveCharacter(0, currentY, currentX - 1);
-                }
-                else
-                {
-                    AttemptUp(testedValue, currentY, currentX);
-                }
+                // If move successful, try again with new space.
+                currentXInt = currentX - 1;
+                maze.UpdateMazeTile(currentY, currentX);
+                MoveCharacter(0, currentY, currentX - 1);
             }
             else
             {
@@ -173,31 +180,27 @@ namespace cis237assignment2
             }
         }
 
+        /// <summary>
+        /// Checks if player can move one space up.
+        /// </summary>
+        /// <param name="testedValue">"Is tile tested" value. See maze property class for details.</param>
+        /// <param name="currentY">Player's current Y index.</param>
+        /// <param name="currentX">Player's current X index.</param>
         private void AttemptUp(int testedValue, int currentY, int currentX)
         {
-            // If tile can be moved into.
-            if (maze.MazeLayout[currentY - 1, currentX].Movement)
+            if (maze.MazeLayout[currentY - 1, currentX].Movement &&             // If tile can be moved into.
+            maze.MazeLayout[currentY - 1, currentX].Tested == testedValue)      // Puts priority on untested tiles.
             {
-                // Puts priority on untested tiles.
-                if (maze.MazeLayout[currentY - 1, currentX].Tested == testedValue)
-                {
-                    // If move successful, try again with new space.
-                    MoveCharacter(0, currentY - 1, currentX);
-                }
-                /* Unecessary lines?
+                // If move successful, try again with new space.
+                currentYInt = currentY - 1;
+                maze.UpdateMazeTile(currentY, currentX);
+                MoveCharacter(0, currentY - 1, currentX);
+            }
             // If no moves can be made on first pass, incriment tested index to go backward spaces.
             else
             {
                 testedValue++;
-                MoveCharacter(testedValue, currentX, currentY);
-            }
-        }
-        // If no moves can be made on first pass, incriment tested index to go backward spaces.
-        else
-        {
-            testedValue++;
-            MoveCharacter(testedValue, currentX, currentY);
-        } */
+                MoveCharacter(testedValue, currentY, currentX);
             }
         }
 
@@ -205,13 +208,19 @@ namespace cis237assignment2
 
         #region Public Methods
 
+        /// <summary>
+        /// Start of recursive attempt to solve maze
+        /// </summary>
+        /// <param name="testedValue">"Is tile tested" value. See maze property class for details.</param>
+        /// <param name="currentY">Player's current Y index.</param>
+        /// <param name="currentX">Player's current X index.</param>
         public void MoveCharacter(int testedValue, int currentY, int currentX)
         {
-            userInterface.DisplayMaze(maze.MazeToString(maze, currentX, currentY));
+            userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
             // If not yet at the exit.
-            if (maze.MazeLayout[currentX, currentY].ID != '!')
+            if (maze.MazeLayout[currentY, currentX].ID != '!')
             {
-                AttemptRight(testedValue, currentX, currentY);
+                AttemptRight(testedValue, currentY, currentX);
             }
             else
             {
