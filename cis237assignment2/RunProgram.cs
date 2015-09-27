@@ -13,7 +13,6 @@ namespace cis237assignment2
     /// </summary>
     class RunProgram
     {
-
         #region Variables
 
         // Classes
@@ -23,6 +22,7 @@ namespace cis237assignment2
         Settings settings;
 
         bool runProgramBool;
+        bool newMazeBool;
         int indexXInt;
         int indexYInt;
         string userInputString;
@@ -41,6 +41,7 @@ namespace cis237assignment2
             userInterface = new UserInterface();
             settings = new Settings(userInterface);
             runProgramBool = true;
+            newMazeBool = false;
 
             while (runProgramBool)
             {
@@ -78,19 +79,22 @@ namespace cis237assignment2
                     CreateMazeMenu();
                     break;
                 case "2":
-                    SolveMaze();
+                    DisplayMaze();
                     break;
                 case "3":
-                    AdjustSettings();
+                    SolveMaze();
                     break;
                 case "4":
+                    AdjustSettings();
+                    break;
+                case "5":
                     CloseProgram();
                     break;
                 case "esc":
                     CloseProgram();
                     break;
                 default:
-                    userInterface.Display("Invalid selection.");
+                    userInterface.DisplayError("Invalid selection.");
                     break;
             }
         }
@@ -107,20 +111,43 @@ namespace cis237assignment2
             {
                 case "1":
                     maze = new Maze(settings);
-                    player = new Character(settings, maze, 1, 1);
+                    newMazeBool = true;
                     break;
                 case "2":
                     maze = new Maze(settings);
-                    maze.TransposeMaze();
-                    player = new Character(settings, maze, 1, 1);
+                    maze.TransposeMazeDiagonal();
+                    newMazeBool = true;
+                    break;
+                case "3":
+                    maze = new Maze(settings);
+                    maze.TransposeMazeHorizontal();
+                    newMazeBool = true;
+                    break;
+                case "4":
+                    maze = new Maze(settings);
+                    maze.TransposeMazeVertical();
+                    newMazeBool = true;
                     break;
                 case "esc":
                     break;
                 default:
-                    userInterface.Display("Invalid selection.");
+                    userInterface.DisplayError("Invalid selection.");
                     break;
+            }
+        }
 
-                
+        /// <summary>
+        /// Displays current maze.
+        /// </summary>
+        private void DisplayMaze()
+        {
+            if (maze != null)
+            {
+                userInterface.DisplayMaze(maze.MazeToString(maze, settings.StartingY, settings.StartingX));
+            }
+            else
+            {
+                userInterface.DisplayError("Must create a maze first!");
             }
         }
 
@@ -129,13 +156,15 @@ namespace cis237assignment2
         /// </summary>
         private void SolveMaze()
         {
-            if (maze != null)
+            if (maze != null && newMazeBool == true)
             {
+                player = new Character(settings, maze, settings.StartingY, settings.StartingX);
                 player.MoveCharacter(0, maze.StartingY, maze.StartingX);
+                newMazeBool = false;
             }
             else
             {
-                userInterface.Display("Must create a maze first!");
+                userInterface.DisplayError("Must create a new maze first!");
             }
         }
 

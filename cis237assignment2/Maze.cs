@@ -21,12 +21,12 @@ namespace cis237assignment2
 
         // Working Variables
         private int mazeSizeInt;
-        private int startingXInt = 1;
-        private int startingYInt = 1;
+        private int startingXInt;
+        private int startingYInt;
         private int indexInt;
         private int indexXInt;
         private int indexYInt;
-        private int waitTimerInt = 500;
+        private int displayTimerInt;
         string displayString;
 
         MazeTile[,] mazeLayout;
@@ -61,9 +61,16 @@ namespace cis237assignment2
             
         }
 
+        /// <summary>
+        /// Constructor which creates a new maze.
+        /// </summary>
+        /// <param name="settings">Current instance of Settings class.</param>
         public Maze(Settings settings)
         {
             Settings = settings;
+            startingXInt = settings.StartingX;
+            startingYInt = settings.StartingY;
+            displayTimerInt = settings.DisplayTimer;
 
             ReadMaze();
             //player = new Character(settings, this, startingYInt, startingXInt);
@@ -196,7 +203,7 @@ namespace cis237assignment2
         /// <summary>
         /// Transposes maze accros the diagonal.
         /// </summary>
-        public void TransposeMaze()
+        public void TransposeMazeDiagonal()
         {
             indexXInt = 0;
             indexYInt = 0;
@@ -209,6 +216,62 @@ namespace cis237assignment2
                 {
                     // Swaps x and y coordinates.
                     tempMaze[indexYInt, indexXInt] = mazeLayout[indexXInt, indexYInt];
+                    indexXInt++;
+                }
+                else
+                {
+                    indexXInt = 0;
+                    indexYInt++;
+                }
+            }
+            mazeLayout = tempMaze;
+        }
+
+        /// <summary>
+        /// Transposes maze accross the horizontal (x) axis.
+        /// </summary>
+        public void TransposeMazeHorizontal()
+        {
+            indexXInt = 0;
+            indexYInt = 0;
+            tempMaze = new MazeTile[mazeSizeInt, mazeSizeInt];
+
+            while (indexYInt < mazeSizeInt)
+            {
+                // If not yet at end of horizontal, add 1 to X. Otherwise reset x and add 1 to Y.
+                if (indexXInt < mazeSizeInt)
+                {
+                    indexInt = (mazeSizeInt - 1) - indexYInt;
+                    // Swaps x and y coordinates.
+                    tempMaze[indexInt, indexXInt] = mazeLayout[indexYInt, indexXInt];
+                    indexXInt++;
+                }
+                else
+                {
+                    indexXInt = 0;
+                    indexYInt++;
+                }
+            }
+            mazeLayout = tempMaze;
+        }
+
+        /// <summary>
+        /// Transposes maze accross the vertical (y) axis.
+        /// </summary>
+        public void TransposeMazeVertical()
+        {
+            indexXInt = 0;
+            indexYInt = 0;
+            tempMaze = new MazeTile[mazeSizeInt, mazeSizeInt];
+
+            while (indexYInt < mazeSizeInt)
+            {
+                // If not yet at end of horizontal, add 1 to X. Otherwise reset x and add 1 to Y.
+                if (indexXInt < mazeSizeInt)
+                {
+                    // Swaps y coordinates.
+                    indexInt = (mazeSizeInt - 1) - indexXInt;
+                    tempMaze[indexYInt, indexInt] = mazeLayout[indexYInt, indexXInt];
                     indexXInt++;
                 }
                 else
@@ -234,7 +297,7 @@ namespace cis237assignment2
             indexYInt = 0;
             displayString = "";
 
-            Task.Delay(waitTimerInt).Wait();
+            Task.Delay(displayTimerInt).Wait();
 
             // While y axis not = max maze size.
             while (indexYInt < mazeSizeInt)

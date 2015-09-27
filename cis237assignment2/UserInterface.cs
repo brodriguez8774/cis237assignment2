@@ -50,8 +50,8 @@ namespace cis237assignment2
         public void DisplayMaze(string mazeDisplayString)
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine + Environment.NewLine +
-                mazeDisplayString +
-                Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine);
+                Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine +
+                mazeDisplayString);
         }
 
         /// <summary>
@@ -73,6 +73,15 @@ namespace cis237assignment2
             Console.WriteLine(outputString);
         }
 
+        public string DisplayHighlight(string outputString)
+        {
+            string displayString;
+            Console.ForegroundColor = ConsoleColor.White;
+            displayString = outputString;
+            Console.ForegroundColor = ConsoleColor.Gray;
+            return displayString;
+        }
+
         /// <summary>
         /// Outputs Main Menu to console.
         /// </summary>
@@ -81,16 +90,17 @@ namespace cis237assignment2
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   Choose an Option:" + "          Note:"+ Environment.NewLine +
                 "   ~~~~~~~~~~~~~~~~~" + "          You may type 'esc' at any point to back out." + Environment.NewLine +
-                "    1) Create a Maze" + Environment.NewLine +
-                "    2) Solve a Maze" + Environment.NewLine +
-                "    3) Settings" + Environment.NewLine +
-                "    4) Exit" + Environment.NewLine);
+                "    1) Create Maze" + Environment.NewLine +
+                "    2) Display Maze" + Environment.NewLine +
+                "    3) Solve Maze" + Environment.NewLine +
+                "    4) Settings" + Environment.NewLine +
+                "    5) Exit" + Environment.NewLine);
         }
 
         /// <summary>
         /// Outputs Settings Menu to console.
         /// </summary>
-        public void DisplaySettingsMenu(int mazeTileWidth, int mazeTileSpacing)
+        public void DisplaySettingsMenu(int mazeTileWidth, int mazeTileSpacing, string startingPositionString, int displayTimer)
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   Choose an Option:" + "          Note:" + Environment.NewLine +
@@ -98,7 +108,18 @@ namespace cis237assignment2
                 "                    " + "              Current Value: " + Environment.NewLine +
                 "   1) Width of each tile" + "          " + mazeTileWidth.ToString() + Environment.NewLine +
                 "   2) Space between each tile" + "     " + mazeTileSpacing.ToString() + Environment.NewLine +
-                "   3) Exit" + Environment.NewLine);
+                "   3) Change Starting Postion" + "     " + startingPositionString + Environment.NewLine +
+                "   4) Adjust Display Timer" + "        " + displayTimer.ToString() + Environment.NewLine +
+                "   5) Exit" + Environment.NewLine);
+        }
+
+        public void DisplayStartingPostionMenu()
+        {
+            Console.WriteLine(Environment.NewLine + Environment.NewLine +
+                "   1) Start at Top Left" + Environment.NewLine +
+                "   2) Start at Top Right" + Environment.NewLine +
+                "   3) Start at Bottom Left" + Environment.NewLine +
+                "   4) Start at Bottom Right" + Environment.NewLine);
         }
 
         /// <summary>
@@ -106,9 +127,11 @@ namespace cis237assignment2
         /// </summary>
         public void DisplayCreateMazeMenu()
         {
-            Console.WriteLine(
+            Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   1) Standard Maze" + Environment.NewLine +
-                "   2) Transposed Maze" + Environment.NewLine);
+                "   2) Transpose Maze Diagonally" + Environment.NewLine +
+                "   3) Transpose Maze Horizontally" + Environment.NewLine +
+                "   4) Transpose Maze Vertically" + Environment.NewLine);
         }
 
         #endregion
