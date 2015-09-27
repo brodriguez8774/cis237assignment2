@@ -16,9 +16,17 @@ namespace cis237assignment2
         #region Variables
 
         private char tileIDChar;
+        private string tileIDString;
         private char tileDisplayChar;
         private bool tileMovementBool;
         private int tileTestedInt;          // "Is tile tested" value. 0 for no. 1 for tested but retracable (can still be walked over). 2 for tested dead end.
+
+        // Constants
+        private static string ID_WALL = "Wall";
+        private static string ID_FLOOR_UNTESTED = "Untested Floor";
+        private static string ID_FLOOR_TESTED = "Tested Floor";
+        private static string ID_DEAD_END = "Dead End";
+        private static string ID_EXIT = "Exit";
 
         #endregion
 
@@ -38,9 +46,9 @@ namespace cis237assignment2
         /// Constructor which sets tile properties based on ID.
         /// </summary>
         /// <param name="tileID">The ID of tile to create.</param>
-        public MazeTile(char tileID)
+        public MazeTile(char tileIDChar)
         {
-            ID = tileID;
+            IDChar = tileIDChar;
 
             SetTileProperties();
         }
@@ -51,7 +59,7 @@ namespace cis237assignment2
 
         #region Properties
 
-        public char ID
+        public char IDChar
         {
             set
             {
@@ -60,6 +68,14 @@ namespace cis237assignment2
             get
             {
                 return tileIDChar;
+            }
+        }
+
+        public string IDString
+        {
+            get
+            {
+                return tileIDString;
             }
         }
 
@@ -87,6 +103,46 @@ namespace cis237assignment2
             }
         }
 
+        public static string ID_Wall
+        {
+            get
+            {
+                return ID_WALL;
+            }
+        }
+
+        public static string ID_FloorUntested
+        {
+            get
+            {
+                return ID_FLOOR_UNTESTED;
+            }
+        }
+
+        public static string ID_FloorTested
+        {
+            get
+            {
+                return ID_FLOOR_TESTED;
+            }
+        }
+
+        public static string ID_DeadEnd
+        {
+            get
+            {
+                return ID_DEAD_END;
+            }
+        }
+
+        public static string ID_Exit
+        {
+            get
+            {
+                return ID_EXIT;
+            }
+        }
+
         #endregion
 
 
@@ -102,29 +158,34 @@ namespace cis237assignment2
             {
                 case '#':
                     tileDisplayChar = '#';
+                    tileIDString = ID_WALL;
                     tileMovementBool = false;
                     break;
 
                 case '.':
                     tileDisplayChar = '.';
+                    tileIDString = ID_FLOOR_UNTESTED;
                     tileMovementBool = true;
                     tileTestedInt = 0;
                     break;
 
                 case 'X':
                     tileDisplayChar = 'X';
+                    tileIDString = ID_FLOOR_TESTED;
                     tileMovementBool = true;
                     tileTestedInt = 1;
                     break;
 
                 case 'O':
                     tileDisplayChar = 'O';
+                    tileIDString = ID_DEAD_END;
                     tileMovementBool = false;
                     tileTestedInt = 2;
                     break;
 
                 case '!':
                     tileDisplayChar = '.';
+                    tileIDString = ID_EXIT;
                     tileMovementBool = true;
                     tileTestedInt = 0;
                     break;

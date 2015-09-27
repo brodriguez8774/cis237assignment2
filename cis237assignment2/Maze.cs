@@ -16,7 +16,7 @@ namespace cis237assignment2
         #region Variables
 
         // Classes
-        Character player;
+        //Character player;
         Settings settings;
 
         // Working Variables
@@ -66,7 +66,7 @@ namespace cis237assignment2
             Settings = settings;
 
             ReadMaze();
-            player = new Character(settings, this, startingYInt, startingXInt);
+            //player = new Character(settings, this, startingYInt, startingXInt);
         }
 
         #endregion
@@ -121,6 +121,9 @@ namespace cis237assignment2
 
         #region Private Methods
 
+        /// <summary>
+        /// Reads in predefined maze and populates tiles accordingly.
+        /// </summary>
         private void ReadMaze()
         {
             indexXInt = 0;
@@ -143,35 +146,7 @@ namespace cis237assignment2
                     indexYInt++;
                 }
             }
-
-            tempMaze = mazeLayout;
         }
-
-        /// <summary>
-        /// Transposes maze accros the diagonal.
-        /// </summary>
-        private void TransposeMaze()
-        {
-            indexXInt = 0;
-            indexYInt = 0;
-
-            while (indexYInt < mazeSizeInt)
-            {
-                if (indexXInt < mazeSizeInt)
-                {
-                    mazeLayout[indexYInt, indexXInt] = tempMaze[indexXInt, indexYInt];
-                    indexXInt++;
-                }
-                indexXInt = 0;
-                indexYInt++;
-            }
-        }
-
-        #endregion
-
-
-
-        #region Public Methods
 
         /// <summary>
         /// Gets the TileDisplay property of current index.
@@ -205,11 +180,44 @@ namespace cis237assignment2
 
             while (indexInt < settings.TileWidth)
             {
-                tempString += player.CharacterDisplay;
+                tempString += Character.CharacterDisplay;
                 indexInt++;
             }
 
             return tempString;
+        }
+
+        #endregion
+
+
+
+        #region Public Methods
+
+        /// <summary>
+        /// Transposes maze accros the diagonal.
+        /// </summary>
+        public void TransposeMaze()
+        {
+            indexXInt = 0;
+            indexYInt = 0;
+            tempMaze = new MazeTile[mazeSizeInt, mazeSizeInt];
+
+            while (indexYInt < mazeSizeInt)
+            {
+                // If not yet at end of horizontal, add 1 to X. Otherwise reset x and add 1 to Y.
+                if (indexXInt < mazeSizeInt)
+                {
+                    // Swaps x and y coordinates.
+                    tempMaze[indexYInt, indexXInt] = mazeLayout[indexXInt, indexYInt];
+                    indexXInt++;
+                }
+                else
+                {
+                    indexXInt = 0;
+                    indexYInt++;
+                }
+            }
+            mazeLayout = tempMaze;
         }
 
         /// <summary>
@@ -282,19 +290,45 @@ namespace cis237assignment2
         /// <param name="currentX">Player's current X coordinate.</param>
         public void UpdateMazeTile(int currentY, int currentX)
         {
-            // If tile has not been tested (walked on) yet.
-            if (mazeLayout[currentY, currentX].Tested == 0)
+            int directionCounter = 0;       // Holds how many nearby tiles are non-accessable.
+
+            // Check tile to the right. If wall or dead end.
+            if (mazeLayout[currentY, currentX + 1].IDString == MazeTile.ID_Wall ||
+                mazeLayout[currentY, currentX + 1].IDString == MazeTile.ID_DeadEnd)
             {
-                mazeLayout[currentY, currentX] = new MazeTile('X');
+                directionCounter++;
+            }
+
+            // Check tile below. If wall or dead end.
+            if (mazeLayout[currentY + 1, currentX].IDString == MazeTile.ID_Wall ||
+                mazeLayout[currentY + 1, currentX].IDString == MazeTile.ID_DeadEnd)
+            {
+                directionCounter++;
+            }
+
+            // Check tile to the left. If wall or dead end.
+            if (mazeLayout[currentY, currentX - 1].IDString == MazeTile.ID_Wall ||
+                mazeLayout[currentY, currentX - 1].IDString == MazeTile.ID_DeadEnd)
+            {
+                directionCounter++;
+            }
+
+            // Check tile to the above. If wall or dead end.
+            if (mazeLayout[currentY - 1, currentX].IDString == MazeTile.ID_Wall ||
+                mazeLayout[currentY - 1, currentX].IDString == MazeTile.ID_DeadEnd)
+            {
+                directionCounter++;
+            }
+
+            // If counter is 3 or higher, then space is a dead end.
+            if (directionCounter >= 3)
+            {
+                mazeLayout[currentY, currentX] = new MazeTile('O');
             }
             else
             {
-                // If tile has been tested (walked on) once before.
-                if (mazeLayout[currentY, currentX].Tested == 1)
-                {
-                    mazeLayout[currentY, currentX] = new MazeTile('O');
-                }
-            }
+                mazeLayout[currentY, currentX] = new MazeTile('X');
+            }     
         }
 
         #endregion

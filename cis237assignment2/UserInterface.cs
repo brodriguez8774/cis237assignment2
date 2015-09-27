@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace cis237assignment2
 {
+    /// <summary>
+    /// Handles all console output and user input. Using this class helps keep visual consistency.
+    /// </summary>
     class UserInterface
     {
         #region Variables
@@ -96,6 +99,16 @@ namespace cis237assignment2
                 "   1) Width of each tile" + "          " + mazeTileWidth.ToString() + Environment.NewLine +
                 "   2) Space between each tile" + "     " + mazeTileSpacing.ToString() + Environment.NewLine +
                 "   3) Exit" + Environment.NewLine);
+        }
+
+        /// <summary>
+        /// Menu for creating new maze.
+        /// </summary>
+        public void DisplayCreateMazeMenu()
+        {
+            Console.WriteLine(
+                "   1) Standard Maze" + Environment.NewLine +
+                "   2) Transposed Maze" + Environment.NewLine);
         }
 
         #endregion

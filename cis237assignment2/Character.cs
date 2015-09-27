@@ -25,7 +25,7 @@ namespace cis237assignment2
         private int startingYInt;
         private int currentXInt;
         private int currentYInt;
-        private char tileDisplayChar = '*';
+        private static char tileDisplayChar = '*';
 
         #endregion
 
@@ -110,7 +110,7 @@ namespace cis237assignment2
             }
         }
 
-        public char CharacterDisplay
+        public static char CharacterDisplay
         {
             get
             {
@@ -137,6 +137,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY, currentX + 1].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
+                userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
                 currentXInt = currentX + 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY, currentX + 1);
@@ -159,6 +160,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY + 1, currentX].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
+                userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
                 currentYInt = currentY + 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY + 1, currentX);
@@ -181,6 +183,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY, currentX - 1].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
+                userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
                 currentXInt = currentX - 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY, currentX - 1);
@@ -203,6 +206,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY - 1, currentX].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
+                userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
                 currentYInt = currentY - 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY - 1, currentX);
@@ -220,21 +224,22 @@ namespace cis237assignment2
         #region Public Methods
 
         /// <summary>
-        /// Start of recursive attempt to solve maze
+        /// Start of recursive attempt to solve maze.
         /// </summary>
         /// <param name="testedValue">"Is tile tested" value. See maze property class for details.</param>
         /// <param name="currentY">Player's current Y index.</param>
         /// <param name="currentX">Player's current X index.</param>
         public void MoveCharacter(int testedValue, int currentY, int currentX)
         {
-            userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
             // If not yet at the exit.
-            if (maze.MazeLayout[currentY, currentX].ID != '!')
+            if (maze.MazeLayout[currentY, currentX].IDString != MazeTile.ID_Exit)
             {
                 AttemptRight(testedValue, currentY, currentX);
             }
             else
             {
+                // Base Case.
+                userInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
                 userInterface.Display("Maze complete!");
             }
         }

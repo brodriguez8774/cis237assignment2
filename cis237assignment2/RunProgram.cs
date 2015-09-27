@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace cis237assignment2
 {
+    /// <summary>
+    /// Runs program and handles interactions between all classes.
+    /// </summary>
     class RunProgram
     {
 
@@ -72,7 +75,7 @@ namespace cis237assignment2
             switch (userInputString)
             {
                 case "1":
-                    CreateMaze();
+                    CreateMazeMenu();
                     break;
                 case "2":
                     SolveMaze();
@@ -92,12 +95,38 @@ namespace cis237assignment2
             }
         }
 
-        private void CreateMaze()
+        /// <summary>
+        /// Creates a new maze.
+        /// </summary>
+        private void CreateMazeMenu()
         {
-            maze = new Maze(settings);
-            player = new Character(settings, maze, 1, 1);
+            userInterface.DisplayCreateMazeMenu();
+            userInputString = userInterface.GetUserInput();
+
+            switch (userInputString)
+            {
+                case "1":
+                    maze = new Maze(settings);
+                    player = new Character(settings, maze, 1, 1);
+                    break;
+                case "2":
+                    maze = new Maze(settings);
+                    maze.TransposeMaze();
+                    player = new Character(settings, maze, 1, 1);
+                    break;
+                case "esc":
+                    break;
+                default:
+                    userInterface.Display("Invalid selection.");
+                    break;
+
+                
+            }
         }
 
+        /// <summary>
+        /// Solves current maze.
+        /// </summary>
         private void SolveMaze()
         {
             if (maze != null)
@@ -110,70 +139,21 @@ namespace cis237assignment2
             }
         }
 
+        /// <summary>
+        /// Opens up settings menu.
+        /// </summary>
         private void AdjustSettings()
         {
             settings.RunSettingsMenu();
         }
 
+        /// <summary>
+        /// Exits program.
+        /// </summary>
         private void CloseProgram()
         {
             runProgramBool = false;
         }
-
-
-
-
-
-        /*
-        /// <summary>
-        /// Displays maze and character's current position.
-        /// </summary>
-        /// <param name="currentMaze">Maze to display. Should be current maze.</param>
-        /// <param name="currentPlayerX">Players current x coordinate.</param>
-        /// <param name="currentPlayerY">Player's current y coordinate.</param>
-        public void DisplayMove(Maze currentMaze, int currentPlayerX, int currentPlayerY)
-        {
-            maze = currentMaze;
-            indexXInt = 0;
-            indexYInt = 0;
-            string displayString = "";
-
-            int startingX = 1;
-            int startingY = 1;
-            Character player = new Character(currentMaze, startingX, startingY);
-
-
-            // While y axis not = max maze size.
-            while (indexYInt < maze.MazeSize)
-            {
-                // While x axis not = max maze size.
-                if (indexXInt < maze.MazeSize)
-                {
-                    // If spot = index character is on, display character instead.
-                    if (player.CurrentX == indexXInt && player.CurrentY == indexYInt)
-                    {
-                        displayString += player.CharacterDisplay;
-                        indexXInt++;
-                    }
-                    else
-                    {
-                        displayString += maze.DisplayMazeTile(indexYInt, indexXInt);
-                        indexXInt++;
-                    }
-                }
-                else
-                {
-                    displayString += Environment.NewLine;
-                    indexXInt = 0;
-                    indexYInt++;
-                }
-            }
-
-            userInterface.DisplayMaze(displayString);
-        }
-         * */
-
-
 
         #endregion
 

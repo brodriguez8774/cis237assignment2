@@ -6,6 +6,16 @@ Brandon Rodriguez
 
 ## Description
 
+Program which creates and solves a maze using recursion and an attempt at "self-updating entity" logic.
+
+User is given a menu. They can create new mazes (currently only derived from a premade one), solve the mazes, or adjust settings of the maze's display.
+
+Each tile in the maze has its own properties, as opposed to just being a static char.
+
+The display is on a timer so that the user can watch while the character navigates to the exit. Character currently attempts to navigate in the following order: right, down, left, then up. Any tiles which have been passed over are marked with an X. Any tiles which have been determined to be a dead end are marked with an O.
+
+## Project Requirements
+
 You must write a program to traverse a 12 x 12 maze and find a successful path from a starting point to an exit. You are given a hard coded maze in the program, as well as some starting coordinates. Each spot in the maze is represented by either a '#' or a '.' (dot). The #'s represent the walls of the maze, and the dots represent paths through the maze. Moves can be made only up, down, left, or right (not diagonally), one spot at a time, and only over paths (not into or across a wall). The exit will be any spot that is on the outside of the array. As your program attempts to find a path leading to the exit, it should place the character 'X' in each spot along the path. If a dead end is reached, your program should replace the X’s with '0'. But, the spots with '0' should be marked back to 'X' if these spots are part of a successful path leading to a final state. The output of your program is the maze configuration after each move. In your testing, you may assume that each maze has a path from its starting point to its exit point. If there is no exit, you will arrive at the starting spot again.
 
 There is a method stub in the main program for transposing the 2D array. The progarm is setup to solve both the orignal maze, and the transposed maze. Your program should be able to solve both of them without any issue.
@@ -31,6 +41,9 @@ Don't forget that you must have a base case for your recursive method or you wil
 http://stackoverflow.com/questions/5449956/how-to-add-a-delay-for-a-2-or-3-seconds
 https://msdn.microsoft.com/en-us/library/hh194873%28v=vs.110%29.aspx
 * Used to figure out how to add a delay to console output. Prior to the delay, the program would solve itself way too fast for the user to follow.
+
+http://www.dotnetperls.com/static-property
+* Used to learn how to create static properties. Prior to static properties, there were a few instances of creating an entire redundant class just go gain access to a single variable.
 
 ## Known Problems, Issues, And/Or Errors in the Program
 
