@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Brandon Rodriguez
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -44,7 +46,9 @@ namespace cis237assignment2
         /// <param name="mazeDisplayString">String representing maze to display.</param>
         public void DisplayMaze(string mazeDisplayString)
         {
-            Console.WriteLine(Environment.NewLine + mazeDisplayString + Environment.NewLine);
+            Console.WriteLine(Environment.NewLine + Environment.NewLine + Environment.NewLine +
+                mazeDisplayString +
+                Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine);
         }
 
         /// <summary>
@@ -53,7 +57,7 @@ namespace cis237assignment2
         /// <returns>String of user's input.</returns>
         public string GetUserInput()
         {
-            userInputString = Console.ReadLine().Trim();
+            userInputString = Console.ReadLine().Trim().ToLower();
             return userInputString;
         }
 
@@ -64,6 +68,34 @@ namespace cis237assignment2
         public void Display(string outputString)
         {
             Console.WriteLine(outputString);
+        }
+
+        /// <summary>
+        /// Outputs Main Menu to console.
+        /// </summary>
+        public void DisplayMainMenu()
+        {
+            Console.WriteLine(Environment.NewLine + Environment.NewLine +
+                "   Choose an Option:" + "          Note:"+ Environment.NewLine +
+                "   ~~~~~~~~~~~~~~~~~" + "          You may type 'esc' at any point to back out." + Environment.NewLine +
+                "    1) Create a Maze" + Environment.NewLine +
+                "    2) Solve a Maze" + Environment.NewLine +
+                "    3) Settings" + Environment.NewLine +
+                "    4) Exit" + Environment.NewLine);
+        }
+
+        /// <summary>
+        /// Outputs Settings Menu to console.
+        /// </summary>
+        public void DisplaySettingsMenu(int mazeTileWidth, int mazeTileSpacing)
+        {
+            Console.WriteLine(Environment.NewLine + Environment.NewLine +
+                "   Choose an Option:" + "          Note:" + Environment.NewLine +
+                "   ~~~~~~~~~~~~~~~~~" + "          You may type 'esc' at any point to back out." + Environment.NewLine +
+                "                    " + "              Current Value: " + Environment.NewLine +
+                "   1) Width of each tile" + "          " + mazeTileWidth.ToString() + Environment.NewLine +
+                "   2) Space between each tile" + "     " + mazeTileSpacing.ToString() + Environment.NewLine +
+                "   3) Exit" + Environment.NewLine);
         }
 
         #endregion

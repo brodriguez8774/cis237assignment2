@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Brandon Rodriguez
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +17,17 @@ namespace cis237assignment2
 
         // Classes
         Character player;
+        Settings settings;
 
         // Working Variables
         private int mazeSizeInt;
         private int startingXInt = 1;
         private int startingYInt = 1;
+        private int indexInt;
         private int indexXInt;
         private int indexYInt;
         private int waitTimerInt = 500;
+        string displayString;
 
         MazeTile[,] mazeLayout;
         MazeTile[,] tempMaze;
@@ -53,8 +58,15 @@ namespace cis237assignment2
         /// </summary>
         public Maze()
         {
+            
+        }
+
+        public Maze(Settings settings)
+        {
+            Settings = settings;
+
             ReadMaze();
-            player = new Character(this, startingYInt, startingXInt);
+            player = new Character(settings, this, startingYInt, startingXInt);
         }
 
         #endregion
@@ -62,6 +74,14 @@ namespace cis237assignment2
 
 
         #region Properties
+
+        public Settings Settings
+        {
+            set
+            {
+                settings = value;
+            }
+        }
 
         public MazeTile[,] MazeLayout
         {
@@ -155,17 +175,46 @@ namespace cis237assignment2
 
         /// <summary>
         /// Gets the TileDisplay property of current index.
+        /// Repeats the tile char equal to the settings.TileWidth property.
         /// </summary>
         /// <param name="currentY">Current Y index.</param>
         /// <param name="currentX">Current X Index.</param>
         /// <returns>The DisplayChar of the index.</returns>
-        public char DisplayMazeTile(int currentY, int currentX)
+        private string DisplayMazeTile(int currentY, int currentX)
         {
-            return mazeLayout[currentY, currentX].Display;
+            displayString = "";
+            indexInt = 0;
+
+            // While index is less than Tile Width property.
+            while (indexInt < settings.TileWidth)
+            {
+                displayString += mazeLayout[currentY, currentX].Display;
+                indexInt++;
+            }
+            return displayString;
+        }
+
+        /// <summary>
+        /// Repeats player display char equal to the settings.TileWidth property.
+        /// </summary>
+        /// <returns>The DisplayChar of the player.</returns>
+        private string DisplayCharacterTile()
+        {
+            string tempString = "";
+            indexInt = 0;
+
+            while (indexInt < settings.TileWidth)
+            {
+                tempString += player.CharacterDisplay;
+                indexInt++;
+            }
+
+            return tempString;
         }
 
         /// <summary>
         /// Creates string to display current maze, including player location and status.
+        /// Adds spaces to the right of each character based on the settings.TileSpacing property.
         /// </summary>
         /// <param name="currentMaze">The current Maze to navigate.</param>
         /// <param name="currentPlayerY">Player's current Y index.</param>
@@ -175,7 +224,7 @@ namespace cis237assignment2
         {
             indexXInt = 0;
             indexYInt = 0;
-            string displayString = "";
+            displayString = "";
 
             Task.Delay(waitTimerInt).Wait();
 
@@ -188,12 +237,30 @@ namespace cis237assignment2
                     // If spot = index character is on, display character instead.
                     if (currentPlayerX == indexXInt && currentPlayerY == indexYInt)
                     {
-                        displayString += player.CharacterDisplay;
+                        displayString += DisplayCharacterTile();
+
+                        indexInt = 0;
+                        // while index is less than the Tile Spacing property.
+                        while (indexInt < settings.TileSpacing)
+                        {
+                            displayString += " ";
+                            indexInt++;
+                        }
+
                         indexXInt++;
                     }
                     else
                     {
                         displayString += DisplayMazeTile(indexYInt, indexXInt);
+
+                        indexInt = 0;
+                        // while index is less than the Tile Spacing property.
+                        while (indexInt < settings.TileSpacing)
+                        {
+                            displayString += " ";
+                            indexInt++;
+                        }
+
                         indexXInt++;
                     }
                 }

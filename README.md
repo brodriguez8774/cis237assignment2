@@ -1,6 +1,8 @@
-# Assignment 1 - Review of C# Basic Concepts and Introduction to Git
+# Assignment 2 - C# Recursion Maze
 
 ## Author
+
+Brandon Rodriguez
 
 ## Description
 
@@ -25,6 +27,10 @@ It might be useful while developing this program to use a smaller sized maze, an
 Don't forget that you must have a base case for your recursive method or you will continue to get a stack overflow. 
 
 ## Outside Resources Used
+
+http://stackoverflow.com/questions/5449956/how-to-add-a-delay-for-a-2-or-3-seconds
+https://msdn.microsoft.com/en-us/library/hh194873%28v=vs.110%29.aspx
+* Used to figure out how to add a delay to console output. Prior to the delay, the program would solve itself way too fast for the user to follow.
 
 ## Known Problems, Issues, And/Or Errors in the Program
 

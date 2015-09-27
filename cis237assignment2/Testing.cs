@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Brandon Rodriguez
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,7 +21,7 @@ namespace cis237assignment2
         /// </summary>
         public void ForceTesting()
         {
-
+            /*
             #region MazeTileTest
 
             Console.WriteLine(Environment.NewLine +
@@ -206,7 +208,7 @@ namespace cis237assignment2
 
             #endregion
 
-
+            */
 
         }
 

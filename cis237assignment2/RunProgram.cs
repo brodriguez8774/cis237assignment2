@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Brandon Rodriguez
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,10 +17,12 @@ namespace cis237assignment2
         Maze maze;
         Character player;
         UserInterface userInterface;
+        Settings settings;
 
         bool runProgramBool;
         int indexXInt;
         int indexYInt;
+        string userInputString;
 
         #endregion
 
@@ -31,13 +35,15 @@ namespace cis237assignment2
         /// </summary>
         public RunProgram()
         {
-            maze = new Maze();
-            player = new Character(maze, 1, 1);
-
-            player.MoveCharacter(0, maze.StartingY, maze.StartingX);
-
-
             userInterface = new UserInterface();
+            settings = new Settings(userInterface);
+            runProgramBool = true;
+
+            while (runProgramBool)
+            {
+                userInterface.DisplayMainMenu();
+                UserMenuSelection();
+            }
 
             //Testing newTest = new Testing();
             //newTest.ForceTesting();
@@ -55,6 +61,70 @@ namespace cis237assignment2
 
         #region Methods
 
+        /// <summary>
+        /// Gets User Selection and takes appropriate action.
+        /// </summary>
+        private void UserMenuSelection()
+        {
+            userInputString = userInterface.GetUserInput();
+            Console.WriteLine();
+
+            switch (userInputString)
+            {
+                case "1":
+                    CreateMaze();
+                    break;
+                case "2":
+                    SolveMaze();
+                    break;
+                case "3":
+                    AdjustSettings();
+                    break;
+                case "4":
+                    CloseProgram();
+                    break;
+                case "esc":
+                    CloseProgram();
+                    break;
+                default:
+                    userInterface.Display("Invalid selection.");
+                    break;
+            }
+        }
+
+        private void CreateMaze()
+        {
+            maze = new Maze(settings);
+            player = new Character(settings, maze, 1, 1);
+        }
+
+        private void SolveMaze()
+        {
+            if (maze != null)
+            {
+                player.MoveCharacter(0, maze.StartingY, maze.StartingX);
+            }
+            else
+            {
+                userInterface.Display("Must create a maze first!");
+            }
+        }
+
+        private void AdjustSettings()
+        {
+            settings.RunSettingsMenu();
+        }
+
+        private void CloseProgram()
+        {
+            runProgramBool = false;
+        }
+
+
+
+
+
+        /*
         /// <summary>
         /// Displays maze and character's current position.
         /// </summary>
@@ -101,11 +171,11 @@ namespace cis237assignment2
 
             userInterface.DisplayMaze(displayString);
         }
+         * */
+
+
 
         #endregion
-
-
-
 
 
     }

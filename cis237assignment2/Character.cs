@@ -1,4 +1,6 @@
-﻿using System;
+﻿// Brandon Rodriguez
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,6 +18,7 @@ namespace cis237assignment2
         // Classes
         Maze maze;
         UserInterface userInterface = new UserInterface();
+        Settings settings;
 
         // Working Variables
         private int startingXInt;
@@ -44,7 +47,7 @@ namespace cis237assignment2
         /// <param name="currentMaze">Current maze of which the player is to solve.</param>
         /// <param name="startingX">The starting X coordinates of player.</param>
         /// <param name="startingY">The starting Y coordinates of player.</param>
-        public Character(Maze currentMaze, int startingY, int startingX)
+        public Character(Settings settings, Maze currentMaze, int startingY, int startingX)
         {
             Maze = currentMaze;
             StartingX = startingX;
@@ -58,6 +61,14 @@ namespace cis237assignment2
 
 
         #region Properties
+
+        public Settings Settings
+        {
+            set
+            {
+                settings = value;
+            }
+        }
 
         public Maze Maze
         {
@@ -224,7 +235,7 @@ namespace cis237assignment2
             }
             else
             {
-                // Victory!
+                userInterface.Display("Maze complete!");
             }
         }
 
