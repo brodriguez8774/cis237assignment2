@@ -8,7 +8,7 @@ Brandon Rodriguez
 
 Program which creates and solves a maze using recursion and an attempt at "self-updating entity" logic.
 
-User is given a menu. They can create new mazes (currently only derived from a premade one), solve the mazes, or adjust settings of the maze's display.
+User is given a menu. They can create new mazes (currently only derived from a premade one), display and solve the mazes, or adjust settings of the maze's display.
 
 Each tile in the maze has its own properties, as opposed to just being a static char.
 
@@ -43,7 +43,10 @@ https://msdn.microsoft.com/en-us/library/hh194873%28v=vs.110%29.aspx
 * Used to figure out how to add a delay to console output. Prior to the delay, the program would solve itself way too fast for the user to follow.
 
 http://www.dotnetperls.com/static-property
-* Used to learn how to create static properties. Prior to static properties, there were a few instances of creating an entire redundant class just go gain access to a single variable.
+* Learned how to create static properties. Prior to static properties, there were a few instances of creating an entire redundant class just go gain access to a single variable.
+
+http://www.dotnetperls.com/console-color
+* Learned how to output different console colors.
 
 ## Known Problems, Issues, And/Or Errors in the Program
 

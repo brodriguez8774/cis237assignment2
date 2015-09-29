@@ -73,13 +73,15 @@ namespace cis237assignment2
             Console.WriteLine(outputString);
         }
 
-        public string DisplayHighlight(string outputString)
+        /// <summary>
+        /// Output for displaying errors to console.
+        /// </summary>
+        /// <param name="outputString">Error to output.</param>
+        public void DisplayError(string outputString)
         {
-            string displayString;
-            Console.ForegroundColor = ConsoleColor.White;
-            displayString = outputString;
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(outputString);
             Console.ForegroundColor = ConsoleColor.Gray;
-            return displayString;
         }
 
         /// <summary>
@@ -113,6 +115,9 @@ namespace cis237assignment2
                 "   5) Exit" + Environment.NewLine);
         }
 
+        /// <summary>
+        /// Menu for changing starting position.
+        /// </summary>
         public void DisplayStartingPostionMenu()
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
