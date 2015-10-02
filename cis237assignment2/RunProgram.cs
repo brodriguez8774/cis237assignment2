@@ -155,8 +155,8 @@ namespace cis237assignment2
         {
             if (maze != null && newMazeBool == true)
             {
-                player = new Character(maze, Settings.StartingY, Settings.StartingX);
-                player.MoveCharacter(0, maze.StartingY, maze.StartingX);
+                player = new Character(maze);
+                player.MoveCharacter(0, Settings.StartingY, Settings.StartingX);
                 newMazeBool = false;
             }
             else

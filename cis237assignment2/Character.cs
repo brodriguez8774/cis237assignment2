@@ -19,8 +19,6 @@ namespace cis237assignment2
         Maze maze;
 
         // Working Variables
-        private int startingXInt;
-        private int startingYInt;
         private int currentXInt;
         private int currentYInt;
         private static char tileDisplayChar = '*';
@@ -45,13 +43,11 @@ namespace cis237assignment2
         /// <param name="currentMaze">Current maze of which the player is to solve.</param>
         /// <param name="startingX">The starting X coordinates of player.</param>
         /// <param name="startingY">The starting Y coordinates of player.</param>
-        public Character(Maze currentMaze, int startingY, int startingX)
+        public Character(Maze currentMaze)
         {
             Maze = currentMaze;
-            StartingX = startingX;
-            StartingY = startingY;
-            currentXInt = startingXInt;
-            currentYInt = startingYInt;
+            currentXInt = Settings.StartingX;
+            currentYInt = Settings.StartingY;
         }
 
         #endregion
@@ -65,22 +61,6 @@ namespace cis237assignment2
             set
             {
                 maze = value;
-            }
-        }
-
-        public int StartingX
-        {
-            set
-            {
-                startingXInt = value;
-            }
-        }
-
-        public int StartingY
-        {
-            set
-            {
-                startingYInt = value;
             }
         }
 

@@ -17,12 +17,9 @@ namespace cis237assignment2
 
         // Working Variables
         private int mazeSizeInt;
-        private int startingXInt;
-        private int startingYInt;
         private int indexInt;
         private int indexXInt;
         private int indexYInt;
-        private int displayTimerInt;
         string displayString;
 
         MazeTile[,] mazeLayout;
@@ -55,12 +52,7 @@ namespace cis237assignment2
         /// <param name="Settings">Current instance of Settings class.</param>
         public Maze()
         {
-            startingXInt = Settings.StartingX;
-            startingYInt = Settings.StartingY;
-            displayTimerInt = Settings.DisplayTimer;
-
             ReadMaze();
-            //player = new Character(settings, this, startingYInt, startingXInt);
         }
 
         #endregion
@@ -74,22 +66,6 @@ namespace cis237assignment2
             get
             {
                 return mazeLayout;
-            }
-        }
-
-        public int StartingX
-        {
-            get
-            {
-                return startingXInt;
-            }
-        }
-
-        public int StartingY
-        {
-            get
-            {
-                return startingYInt;
             }
         }
 
@@ -276,7 +252,7 @@ namespace cis237assignment2
             indexYInt = 0;
             displayString = "";
 
-            Task.Delay(displayTimerInt).Wait();
+            Task.Delay(Settings.DisplayTimer).Wait();
 
             // While y axis not = max maze size.
             while (indexYInt < mazeSizeInt)
