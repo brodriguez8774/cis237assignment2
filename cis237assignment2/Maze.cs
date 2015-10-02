@@ -15,10 +15,6 @@ namespace cis237assignment2
     {
         #region Variables
 
-        // Classes
-        //Character player;
-        Settings settings;
-
         // Working Variables
         private int mazeSizeInt;
         private int startingXInt;
@@ -54,23 +50,14 @@ namespace cis237assignment2
         #region Constructor
 
         /// <summary>
-        /// Base Constructor.
+        /// Base Constructor which creates a new maze.
         /// </summary>
+        /// <param name="Settings">Current instance of Settings class.</param>
         public Maze()
         {
-            
-        }
-
-        /// <summary>
-        /// Constructor which creates a new maze.
-        /// </summary>
-        /// <param name="settings">Current instance of Settings class.</param>
-        public Maze(Settings settings)
-        {
-            Settings = settings;
-            startingXInt = settings.StartingX;
-            startingYInt = settings.StartingY;
-            displayTimerInt = settings.DisplayTimer;
+            startingXInt = Settings.StartingX;
+            startingYInt = Settings.StartingY;
+            displayTimerInt = Settings.DisplayTimer;
 
             ReadMaze();
             //player = new Character(settings, this, startingYInt, startingXInt);
@@ -81,14 +68,6 @@ namespace cis237assignment2
 
 
         #region Properties
-
-        public Settings Settings
-        {
-            set
-            {
-                settings = value;
-            }
-        }
 
         public MazeTile[,] MazeLayout
         {
@@ -168,7 +147,7 @@ namespace cis237assignment2
             indexInt = 0;
 
             // While index is less than Tile Width property.
-            while (indexInt < settings.TileWidth)
+            while (indexInt < Settings.TileWidth)
             {
                 displayString += mazeLayout[currentY, currentX].Display;
                 indexInt++;
@@ -185,7 +164,7 @@ namespace cis237assignment2
             string tempString = "";
             indexInt = 0;
 
-            while (indexInt < settings.TileWidth)
+            while (indexInt < Settings.TileWidth)
             {
                 tempString += Character.CharacterDisplay;
                 indexInt++;
@@ -312,7 +291,7 @@ namespace cis237assignment2
 
                         indexInt = 0;
                         // while index is less than the Tile Spacing property.
-                        while (indexInt < settings.TileSpacing)
+                        while (indexInt < Settings.TileSpacing)
                         {
                             displayString += " ";
                             indexInt++;
@@ -326,7 +305,7 @@ namespace cis237assignment2
 
                         indexInt = 0;
                         // while index is less than the Tile Spacing property.
-                        while (indexInt < settings.TileSpacing)
+                        while (indexInt < Settings.TileSpacing)
                         {
                             displayString += " ";
                             indexInt++;

@@ -11,17 +11,11 @@ namespace cis237assignment2
     /// <summary>
     /// Handles all console output and user input. Using this class helps keep visual consistency.
     /// </summary>
-    class UserInterface
+    static class UserInterface
     {
         #region Variables
 
-        private string userInputString;
-
-        #endregion
-
-
-
-        #region Constructor
+        private static string userInputString;
 
         #endregion
 
@@ -29,7 +23,7 @@ namespace cis237assignment2
 
         #region Properties
 
-        public string UserSelection
+        public static string UserSelection
         {
             get
             {
@@ -47,7 +41,7 @@ namespace cis237assignment2
         /// Method specific for output of maze strings.
         /// </summary>
         /// <param name="mazeDisplayString">String representing maze to display.</param>
-        public void DisplayMaze(string mazeDisplayString)
+        public static void DisplayMaze(string mazeDisplayString)
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine + Environment.NewLine +
                 Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine +
@@ -58,7 +52,7 @@ namespace cis237assignment2
         /// Gets user input from console.
         /// </summary>
         /// <returns>String of user's input.</returns>
-        public string GetUserInput()
+        public static string GetUserInput()
         {
             userInputString = Console.ReadLine().Trim().ToLower();
             return userInputString;
@@ -68,7 +62,7 @@ namespace cis237assignment2
         /// Display standard output to console.
         /// </summary>
         /// <param name="outputString">Output to display.</param>
-        public void Display(string outputString)
+        public static void Display(string outputString)
         {
             Console.WriteLine(outputString);
         }
@@ -77,7 +71,7 @@ namespace cis237assignment2
         /// Output for displaying errors to console.
         /// </summary>
         /// <param name="outputString">Error to output.</param>
-        public void DisplayError(string outputString)
+        public static void DisplayError(string outputString)
         {
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(outputString);
@@ -87,7 +81,7 @@ namespace cis237assignment2
         /// <summary>
         /// Outputs Main Menu to console.
         /// </summary>
-        public void DisplayMainMenu()
+        public static void DisplayMainMenu()
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   Choose an Option:" + "          Note:"+ Environment.NewLine +
@@ -102,7 +96,7 @@ namespace cis237assignment2
         /// <summary>
         /// Outputs Settings Menu to console.
         /// </summary>
-        public void DisplaySettingsMenu(int mazeTileWidth, int mazeTileSpacing, string startingPositionString, int displayTimer)
+        public static void DisplaySettingsMenu(int mazeTileWidth, int mazeTileSpacing, string startingPositionString, int displayTimer)
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   Choose an Option:" + "          Note:" + Environment.NewLine +
@@ -118,7 +112,7 @@ namespace cis237assignment2
         /// <summary>
         /// Menu for changing starting position.
         /// </summary>
-        public void DisplayStartingPostionMenu()
+        public static void DisplayStartingPostionMenu()
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   1) Start at Top Left" + Environment.NewLine +
@@ -130,7 +124,7 @@ namespace cis237assignment2
         /// <summary>
         /// Menu for creating new maze.
         /// </summary>
-        public void DisplayCreateMazeMenu()
+        public static void DisplayCreateMazeMenu()
         {
             Console.WriteLine(Environment.NewLine + Environment.NewLine +
                 "   1) Standard Maze" + Environment.NewLine +

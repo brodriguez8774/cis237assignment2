@@ -18,8 +18,6 @@ namespace cis237assignment2
         // Classes
         Maze maze;
         Character player;
-        UserInterface userInterface;
-        Settings settings;
 
         bool runProgramBool;
         bool newMazeBool;
@@ -38,14 +36,13 @@ namespace cis237assignment2
         /// </summary>
         public RunProgram()
         {
-            userInterface = new UserInterface();
-            settings = new Settings(userInterface);
+            Settings.InitializeSettings();
             runProgramBool = true;
             newMazeBool = false;
 
             while (runProgramBool)
             {
-                userInterface.DisplayMainMenu();
+                UserInterface.DisplayMainMenu();
                 UserMenuSelection();
             }
 
@@ -70,7 +67,7 @@ namespace cis237assignment2
         /// </summary>
         private void UserMenuSelection()
         {
-            userInputString = userInterface.GetUserInput();
+            userInputString = UserInterface.GetUserInput();
             Console.WriteLine();
 
             switch (userInputString)
@@ -94,7 +91,7 @@ namespace cis237assignment2
                     CloseProgram();
                     break;
                 default:
-                    userInterface.DisplayError("Invalid selection.");
+                    UserInterface.DisplayError("Invalid selection.");
                     break;
             }
         }
@@ -104,34 +101,34 @@ namespace cis237assignment2
         /// </summary>
         private void CreateMazeMenu()
         {
-            userInterface.DisplayCreateMazeMenu();
-            userInputString = userInterface.GetUserInput();
+            UserInterface.DisplayCreateMazeMenu();
+            userInputString = UserInterface.GetUserInput();
 
             switch (userInputString)
             {
                 case "1":
-                    maze = new Maze(settings);
+                    maze = new Maze();
                     newMazeBool = true;
                     break;
                 case "2":
-                    maze = new Maze(settings);
+                    maze = new Maze();
                     maze.TransposeMazeDiagonal();
                     newMazeBool = true;
                     break;
                 case "3":
-                    maze = new Maze(settings);
+                    maze = new Maze();
                     maze.TransposeMazeHorizontal();
                     newMazeBool = true;
                     break;
                 case "4":
-                    maze = new Maze(settings);
+                    maze = new Maze();
                     maze.TransposeMazeVertical();
                     newMazeBool = true;
                     break;
                 case "esc":
                     break;
                 default:
-                    userInterface.DisplayError("Invalid selection.");
+                    UserInterface.DisplayError("Invalid selection.");
                     break;
             }
         }
@@ -143,11 +140,11 @@ namespace cis237assignment2
         {
             if (maze != null)
             {
-                userInterface.DisplayMaze(maze.MazeToString(maze, settings.StartingY, settings.StartingX));
+                UserInterface.DisplayMaze(maze.MazeToString(maze, Settings.StartingY, Settings.StartingX));
             }
             else
             {
-                userInterface.DisplayError("Must create a maze first!");
+                UserInterface.DisplayError("Must create a maze first!");
             }
         }
 
@@ -158,13 +155,13 @@ namespace cis237assignment2
         {
             if (maze != null && newMazeBool == true)
             {
-                player = new Character(settings, maze, settings.StartingY, settings.StartingX);
+                player = new Character(maze, Settings.StartingY, Settings.StartingX);
                 player.MoveCharacter(0, maze.StartingY, maze.StartingX);
                 newMazeBool = false;
             }
             else
             {
-                userInterface.DisplayError("Must create a new maze first!");
+                UserInterface.DisplayError("Must create a new maze first!");
             }
         }
 
@@ -173,7 +170,7 @@ namespace cis237assignment2
         /// </summary>
         private void AdjustSettings()
         {
-            settings.RunSettingsMenu();
+            Settings.RunSettingsMenu();
         }
 
         /// <summary>

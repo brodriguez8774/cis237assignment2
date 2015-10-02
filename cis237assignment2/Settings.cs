@@ -10,58 +10,26 @@ namespace cis237assignment2
 {
     /// <summary>
     /// Holds values of settings which are used throughout program.
+    /// Make sure to run InitializeSettings method before first use!
     /// </summary>
-    class Settings
+    static class Settings
     {
         #region Variables
 
-        // Classes
-        UserInterface userInterface;
-
         // Working variables
-        bool runSettingsBool;
-        string userInputString;
-        int userInputInt;
+        private static bool runSettingsBool;
+        private static string userInputString;
+        private static int userInputInt;
 
-        int mazeTileSpacingInt;             // Number of spaces between each tile. Cannot go negative.
-        int mazeTileWidthInt;               // Size of each individual tile. Cannot go below 1.
+        private static int mazeTileSpacingInt;             // Number of spaces between each tile. Cannot go negative.
+        private static int mazeTileWidthInt;               // Size of each individual tile. Cannot go below 1.
 
-        int userStartingXInt;               // Values for user's starting position.
-        int userStartingYInt;
-        string userStartingString;
+        private static int userStartingXInt;               // Values for user's starting position.
+        private static int userStartingYInt;
+        private static string userStartingString;
 
-        int displayTimerInt;                // Timer value for console delay.
+        private static int displayTimerInt;                // Timer value for console delay.
 
-
-        #endregion
-
-
-
-        #region Constructor
-
-        /// <summary>
-        /// Base constructor.
-        /// </summary>
-        public Settings()
-        {
-            
-        }
-
-        /// <summary>
-        /// Constructor which sets initial values of settings.
-        /// </summary>
-        /// <param name="userInterface">UserInterface Class.</param>
-        public Settings(UserInterface userInterface)
-        {
-            Interface = userInterface;
-
-            mazeTileSpacingInt = 1;
-            mazeTileWidthInt = 2;
-            userStartingXInt = 1;
-            userStartingYInt = 1;
-            userStartingString = "Top Left";
-            displayTimerInt = 500;
-        }
 
         #endregion
 
@@ -69,15 +37,7 @@ namespace cis237assignment2
 
         #region Properties
 
-        public UserInterface Interface
-        {
-            set
-            {
-                userInterface = value;
-            }
-        }
-
-        public int TileSpacing
+        public static int TileSpacing
         {
             get
             {
@@ -85,7 +45,7 @@ namespace cis237assignment2
             }
         }
 
-        public int TileWidth
+        public static int TileWidth
         {
             get
             {
@@ -93,7 +53,7 @@ namespace cis237assignment2
             }
         }
 
-        public int StartingX
+        public static int StartingX
         {
             get
             {
@@ -101,7 +61,7 @@ namespace cis237assignment2
             }
         }
 
-        public int StartingY
+        public static int StartingY
         {
             get
             {
@@ -109,7 +69,7 @@ namespace cis237assignment2
             }
         }
 
-        public string StartingString
+        public static string StartingString
         {
             get
             {
@@ -117,7 +77,7 @@ namespace cis237assignment2
             }
         }
 
-        public int DisplayTimer
+        public static int DisplayTimer
         {
             get
             {
@@ -134,9 +94,9 @@ namespace cis237assignment2
         /// <summary>
         /// Gets User Selection and takes appropriate action.
         /// </summary>
-        private void UserMenuSelection()
+        private static void UserMenuSelection()
         {
-            userInputString = userInterface.GetUserInput();
+            userInputString = UserInterface.GetUserInput();
             Console.WriteLine();
 
             switch (userInputString)
@@ -160,7 +120,7 @@ namespace cis237assignment2
                     CloseMenu();
                     break;
                 default:
-                    userInterface.DisplayError("Invalid selection.");
+                    UserInterface.DisplayError("Invalid selection.");
                     break;
             }
         }
@@ -168,10 +128,10 @@ namespace cis237assignment2
         /// <summary>
         /// Changes the Tile Width setting. Impacts maze display.
         /// </summary>
-        private void ChangeTileWidth()
+        private static void ChangeTileWidth()
         {
-            userInterface.Display("Width of each individual tile. Must be a number. Cannot go below 1.");
-            userInputString = userInterface.GetUserInput();
+            UserInterface.Display("Width of each individual tile. Must be a number. Cannot go below 1.");
+            userInputString = UserInterface.GetUserInput();
             
             try
             {
@@ -186,23 +146,23 @@ namespace cis237assignment2
                     }
                     else
                     {
-                        userInterface.DisplayError("Invalid input. Must be a number greater than 0.");
+                        UserInterface.DisplayError("Invalid input. Must be a number greater than 0.");
                     }
                 }
             }
             catch
             {
-                userInterface.DisplayError("Invalid input. Must be a number greater than 0.");
+                UserInterface.DisplayError("Invalid input. Must be a number greater than 0.");
             }
         }
 
         /// <summary>
         /// Changes the Tile Spacing setting. Impacts maze display.
         /// </summary>
-        private void ChangeTileSpacing()
+        private static void ChangeTileSpacing()
         {
-            userInterface.Display("Spacing between each tile. Must be a number. Cannot go negative.");
-            userInputString = userInterface.GetUserInput();
+            UserInterface.Display("Spacing between each tile. Must be a number. Cannot go negative.");
+            userInputString = UserInterface.GetUserInput();
 
             try
             {
@@ -217,23 +177,23 @@ namespace cis237assignment2
                     }
                     else
                     {
-                        userInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                        UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
                     }
                 }
             }
             catch
             {
-                userInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
             }
         }
 
         /// <summary>
         /// Changes player's starting position.
         /// </summary>
-        private void ChangeStartingPosition()
+        private static void ChangeStartingPosition()
         {
-            userInterface.DisplayStartingPostionMenu();
-            userInputString = userInterface.GetUserInput();
+            UserInterface.DisplayStartingPostionMenu();
+            userInputString = UserInterface.GetUserInput();
 
             switch (userInputString)
             {
@@ -260,7 +220,7 @@ namespace cis237assignment2
                 case "esc":
                     break;
                 default:
-                    userInterface.Display("Invalid selection.");
+                    UserInterface.Display("Invalid selection.");
                     break;
             }
         }
@@ -268,10 +228,10 @@ namespace cis237assignment2
         /// <summary>
         /// Changes the delay for console output when solving a maze.
         /// </summary>
-        private void ChangeDisplayTimer()
+        private static void ChangeDisplayTimer()
         {
-            userInterface.Display("Enter a non-negative number. Note: Input of 1000 equals 1 second.");
-            userInputString = userInterface.GetUserInput();
+            UserInterface.Display("Enter a non-negative number. Note: Input of 1000 equals 1 second.");
+            userInputString = UserInterface.GetUserInput();
 
             try
             {
@@ -286,20 +246,20 @@ namespace cis237assignment2
                     }
                     else
                     {
-                        userInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                        UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
                     }
                 }
             }
             catch
             {
-                userInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
             }
         }
 
         /// <summary>
         /// Exits settings menu.
         /// </summary>
-        private void CloseMenu()
+        private static void CloseMenu()
         {
             runSettingsBool = false;
         }
@@ -312,15 +272,28 @@ namespace cis237assignment2
         #region PublicMethods
 
         /// <summary>
+        /// Replaces constructor now that method is static. Must be ran to get prefered default values.
+        /// </summary>
+        public static void InitializeSettings()
+        {
+            mazeTileSpacingInt = 1;
+            mazeTileWidthInt = 2;
+            userStartingXInt = 1;
+            userStartingYInt = 1;
+            userStartingString = "Top Left";
+            displayTimerInt = 500;
+        }
+
+        /// <summary>
         /// Loops to display and run Setting Menu until user chooses to exit.
         /// </summary>
-        public void RunSettingsMenu()
+        public static void RunSettingsMenu()
         {
             runSettingsBool = true;
 
             while (runSettingsBool)
             {
-                userInterface.DisplaySettingsMenu(mazeTileWidthInt, mazeTileSpacingInt, userStartingString, displayTimerInt);
+                UserInterface.DisplaySettingsMenu(mazeTileWidthInt, mazeTileSpacingInt, userStartingString, displayTimerInt);
                 UserMenuSelection();
             }
         }
