@@ -315,7 +315,7 @@ namespace cis237assignment2
             userStartingXInt = 1;
             userStartingYInt = 1;
             userStartingString = "Top Left";
-            displayTimerInt = 100;
+            displayTimerInt = 75;
             randomMazeBool = false;
             displayColorsBool = true;
         }

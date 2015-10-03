@@ -50,6 +50,7 @@ namespace cis237assignment2
         int farthestDistanceInt;
         int startingXInt;           // Only used in random gen, not premade.
         int startingYInt;           // Only used in random gen, not premade.
+        bool successfulGenerationBool;  // Used to stop the program from sploding horrifically.
 
         #endregion
 
@@ -79,6 +80,11 @@ namespace cis237assignment2
         public int MazeSize
         {
             get { return mazeSizeInt;}
+        }
+
+        public bool GenerationSuccessful
+        {
+            get { return successfulGenerationBool; }
         }
 
         #endregion
@@ -472,31 +478,40 @@ namespace cis237assignment2
         /// </summary>
         public void GenerateNewMaze()
         {
-            UserInterface.Display("Enter size of maze: ");
+            successfulGenerationBool = false;
+            UserInterface.Display("Enter size of maze:      (Must be a number between 1 and 20.)");
+            string userInput = UserInterface.GetUserInput();
             try
             {
+                if (Convert.ToInt32(userInput) > 0 && Convert.ToInt32(userInput) < 21)
+                {
+                    // Assumes value user enters is the number of tiles INSIDE the outer walls.
+                    // IE: if the user enters size "3", then the array will be a 5 x 5, including outer walls.
+                    mazeSizeInt = Convert.ToInt32(userInput) + 2;
+                    UserInterface.RemoveDisplayLine();
+                    successfulGenerationBool = true;
 
-                // Assumes value user enters is the number of tiles INSIDE the outer walls.
-                // IE: if the user enters size "3", then the array will be a 5 x 5, including outer walls.
-                mazeSizeInt = Convert.ToInt32(UserInterface.GetUserInput()) + 2;
-                UserInterface.RemoveDisplayLine();
+                    // Actually generate maze.
+                    DetermineMazeStart();
+                    CreateOuterWalls();
+                    firstTileBool = true;
+                    farthestDistanceInt = 0;
+                    CreateMazeInside(mazeExitYInt, mazeExitXInt, savedRandomInt, 0);
 
-                // Actually generate maze.
-                DetermineMazeStart();
-                CreateOuterWalls();
-                firstTileBool = true;
-                farthestDistanceInt = 0;
-                CreateMazeInside(mazeExitYInt, mazeExitXInt, savedRandomInt, 0);
-
-                // Saving of last minute settings.
-                Settings.RandomMazeStartingLocation(startingYInt, startingXInt);
-                VoidOutExtraTiles();
-                CreatePlaceHolderMaze();
-                UserInterface.DisplayMaze(MazeToString(this, Settings.StartingY, Settings.StartingX));
+                    // Saving of last minute settings.
+                    Settings.RandomMazeStartingLocation(startingYInt, startingXInt);
+                    VoidOutExtraTiles();
+                    CreatePlaceHolderMaze();
+                    UserInterface.DisplayMaze(MazeToString(this, Settings.StartingY, Settings.StartingX));
+                }
+                else
+                {
+                    UserInterface.DisplayError("Maze must be between 1 and 20 tiles long.");
+                }
             }
             catch
             {
-                UserInterface.DisplayError("Invalid input. Must be a number greater than 0.");
+                UserInterface.DisplayError("Invalid input. Must be a number greater than 0 and less than 20.");
             }
         }
 

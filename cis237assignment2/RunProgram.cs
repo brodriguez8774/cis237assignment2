@@ -244,8 +244,12 @@ namespace cis237assignment2
             else
             {
                 maze.GenerateNewMaze();
-                newMazeBool = true;
-                mazeCreatedBool = true;
+                // Prevents program from breaking if user enters bad(large) numbers.
+                if (maze.GenerationSuccessful)
+                {
+                    newMazeBool = true;
+                    mazeCreatedBool = true;
+                }
             }
         }
 
