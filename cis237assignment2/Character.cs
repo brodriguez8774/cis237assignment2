@@ -95,7 +95,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY, currentX + 1].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
-                UserInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
+                UserInterface.DisplayMaze(maze.MazeToString(currentY, currentX));
                 currentXInt = currentX + 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY, currentX + 1);
@@ -118,7 +118,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY + 1, currentX].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
-                UserInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
+                UserInterface.DisplayMaze(maze.MazeToString(currentY, currentX));
                 currentYInt = currentY + 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY + 1, currentX);
@@ -141,7 +141,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY, currentX - 1].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
-                UserInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
+                UserInterface.DisplayMaze(maze.MazeToString(currentY, currentX));
                 currentXInt = currentX - 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY, currentX - 1);
@@ -164,7 +164,7 @@ namespace cis237assignment2
             maze.MazeLayout[currentY - 1, currentX].Tested == testedValue)      // Puts priority on untested tiles.
             {
                 // If move successful, try again with new space.
-                UserInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
+                UserInterface.DisplayMaze(maze.MazeToString(currentY, currentX));
                 currentYInt = currentY - 1;
                 maze.UpdateMazeTile(currentY, currentX);
                 MoveCharacter(0, currentY - 1, currentX);
@@ -197,7 +197,7 @@ namespace cis237assignment2
             else
             {
                 // Base Case.
-                UserInterface.DisplayMaze(maze.MazeToString(maze, currentY, currentX));
+                UserInterface.DisplayMaze(maze.MazeToString(currentY, currentX));
                 UserInterface.Display("Maze complete!");
             }
         }

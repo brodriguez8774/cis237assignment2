@@ -143,7 +143,7 @@ namespace cis237assignment2
                 // If maze currently unsolved.
                 if (newMazeBool == true)
                 {
-                    UserInterface.DisplayMaze(maze.MazeToString(maze, Settings.StartingY, Settings.StartingX));
+                    UserInterface.DisplayMaze(maze.MazeToString(Settings.StartingY, Settings.StartingX));
                 }
                 else
                 {
@@ -225,6 +225,9 @@ namespace cis237assignment2
                 newMazeBool = true;
                 mazeCreatedBool = true;
             }
+            // Displays new maze.
+            maze.ResetMazeDisplay();
+            UserInterface.DisplayMaze(maze.MazeToString(Settings.StartingY, Settings.StartingX));
         }
 
         /// <summary>
@@ -264,6 +267,10 @@ namespace cis237assignment2
             {
                 maze.TransposeMazeDiagonal();
                 newMazeBool = true;
+
+                // Displays new maze.
+                maze.ResetMazeDisplay();
+                UserInterface.DisplayMaze(maze.MazeToString(Settings.StartingY, Settings.StartingX));
             }
             else
             {
@@ -282,6 +289,10 @@ namespace cis237assignment2
             {
                 maze.TransposeMazeHorizontal();
                 newMazeBool = true;
+
+                // Displays new maze.
+                maze.ResetMazeDisplay();
+                UserInterface.DisplayMaze(maze.MazeToString(Settings.StartingY, Settings.StartingX));
             }
             else
             {
@@ -300,6 +311,10 @@ namespace cis237assignment2
             {
                 maze.TransposeMazeVertical();
                 newMazeBool = true;
+
+                // Displays new maze.
+                maze.ResetMazeDisplay();
+                UserInterface.DisplayMaze(maze.MazeToString(Settings.StartingY, Settings.StartingX));
             }
             else
             {

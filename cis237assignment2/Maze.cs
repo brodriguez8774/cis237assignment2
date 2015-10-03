@@ -320,7 +320,7 @@ namespace cis237assignment2
         /// <param name="currentPlayerY">Player's current Y index.</param>
         /// <param name="currentPlayerX">Player's current X index.</param>
         /// <returns>String composed of maze visual.</returns>
-        public string MazeToString(Maze currentMaze, int currentPlayerY, int currentPlayerX)
+        public string MazeToString(int currentPlayerY, int currentPlayerX)
         {
             indexXInt = 0;
             indexYInt = 0;
@@ -500,7 +500,7 @@ namespace cis237assignment2
                     Settings.RandomMazeStartingLocation(startingYInt, startingXInt);
                     VoidOutExtraTiles();
                     CreatePlaceHolderMaze();
-                    UserInterface.DisplayMaze(MazeToString(this, Settings.StartingY, Settings.StartingX));
+                    UserInterface.DisplayMaze(MazeToString(Settings.StartingY, Settings.StartingX));
                 }
                 else
                 {
@@ -644,7 +644,7 @@ namespace cis237assignment2
         /// <param name="currentDistance">Current distance from maze start. Pass + 1 for each time this method is called.</param>
         private void CreateMazeInside(int currentY, int currentX, int previousDirection, int currentDistance)
         {
-            UserInterface.DisplayMaze(MazeToString(this, currentY, currentX));
+            UserInterface.DisplayMaze(MazeToString(currentY, currentX));
 
 
             // If current tile distance from start is greater than saved farthest distance.
