@@ -326,8 +326,6 @@ namespace cis237assignment2
             indexYInt = 0;
             displayString = "";
 
-            Task.Delay(Settings.DisplayTimer).Wait();
-
             // While y axis not = max maze size.
             while (indexYInt < mazeSizeInt)
             {

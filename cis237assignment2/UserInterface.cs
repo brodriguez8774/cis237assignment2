@@ -62,6 +62,9 @@ namespace cis237assignment2
             {
                 Console.WriteLine(mazeDisplayString);
             }
+
+            // Delay after each instance of displaying maze.
+            Task.Delay(Settings.DisplayTimer).Wait();
         }
 
 

@@ -128,7 +128,7 @@ namespace cis237assignment2
         {
             UserInterface.RemoveDisplayLine();
 
-            UserInterface.Display("Width of each individual tile. Must be a number. Cannot go below 1.");
+            UserInterface.Display("Width of each individual tile. Must be a number between 1 and 3.");
             userInputString = UserInterface.GetUserInput();
             
             try
@@ -138,20 +138,20 @@ namespace cis237assignment2
                 {
                     userInputInt = Convert.ToInt32(userInputString);
                     // If input is greater than 0.
-                    if (userInputInt > 0)
+                    if (userInputInt > 0 && userInputInt < 4)
                     {
                         UserInterface.RemoveDisplayLine();
                         mazeTileWidthInt = userInputInt;
                     }
                     else
                     {
-                        UserInterface.DisplayError("Invalid input. Must be a number greater than 0.");
+                        UserInterface.DisplayError("Invalid input. Must be a number between 1 and 3.");
                     }
                 }
             }
             catch
             {
-                UserInterface.DisplayError("Invalid input. Must be a number greater than 0.");
+                UserInterface.DisplayError("Invalid input. Must be a number between 1 and 3.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace cis237assignment2
         private static void ChangeTileSpacing()
         {
             UserInterface.RemoveDisplayLine();
-            UserInterface.Display("Spacing between each tile. Must be a number. Cannot go negative.");
+            UserInterface.Display("Spacing between each tile. Must be a number between 0 and 3.");
             userInputString = UserInterface.GetUserInput();
 
             try
@@ -173,19 +173,19 @@ namespace cis237assignment2
                 {
                     userInputInt = Convert.ToInt32(userInputString);
                     // If input is non-negative.
-                    if (userInputInt >= 0)
+                    if (userInputInt >= 0 && userInputInt < 4)
                     {
                         mazeTileSpacingInt = userInputInt;
                     }
                     else
                     {
-                        UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                        UserInterface.DisplayError("Invalid input. Must be a number between 0 and 3.");
                     }
                 }
             }
             catch
             {
-                UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                UserInterface.DisplayError("Invalid input. Must be a number between 0 and 3.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace cis237assignment2
         {
             UserInterface.RemoveDisplayLine();
 
-            UserInterface.Display("Enter a non-negative number. Note: Input of 1000 equals 1 second.");
+            UserInterface.Display("Enter a number between 0 and 2000. Note: Input of 1000 equals 1 second.");
             userInputString = UserInterface.GetUserInput();
 
             try
@@ -255,19 +255,19 @@ namespace cis237assignment2
                 {
                     userInputInt = Convert.ToInt32(userInputString);
                     // If input is greater than 0.
-                    if (userInputInt >= 0)
+                    if (userInputInt >= 0 && userInputInt <= 2000)
                     {
                         displayTimerInt = userInputInt;
                     }
                     else
                     {
-                        UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                        UserInterface.DisplayError("Invalid input. Must be a number between 0 and 2000.");
                     }
                 }
             }
             catch
             {
-                UserInterface.DisplayError("Invalid input. Must be a non-negative number.");
+                UserInterface.DisplayError("Invalid input. Must be a number between 0 and 2000.");
             }
         }
 

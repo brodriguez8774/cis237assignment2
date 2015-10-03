@@ -260,7 +260,7 @@ namespace cis237assignment2
         {
             UserInterface.RemoveDisplayLine();
 
-            if (maze != null)
+            if (maze.MazeLayout != null)
             {
                 maze.TransposeMazeDiagonal();
                 newMazeBool = true;
@@ -278,7 +278,7 @@ namespace cis237assignment2
         {
             UserInterface.RemoveDisplayLine();
 
-            if (maze != null)
+            if (maze.MazeLayout != null)
             {
                 maze.TransposeMazeHorizontal();
                 newMazeBool = true;
@@ -296,7 +296,7 @@ namespace cis237assignment2
         {
             UserInterface.RemoveDisplayLine();
 
-            if (maze != null)
+            if (maze.MazeLayout != null)
             {
                 maze.TransposeMazeVertical();
                 newMazeBool = true;
