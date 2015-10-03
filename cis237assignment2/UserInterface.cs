@@ -65,12 +65,17 @@ namespace cis237assignment2
         }
 
 
+        /// <summary>
+        /// NOTE: Call from maze class instead!
+        /// Resets display of maze.
+        /// </summary>
+        /// <param name="mazeSizeInt">Current mazeSizeInt from Maze class.</param>
         public static void ResetMazeDisplay(int mazeSizeInt)
         {
             Console.SetCursorPosition(0, 12);
 
             int index = 0;
-            while (index < mazeSizeInt)
+            while (index < (mazeSizeInt * 2))
             {
                 Console.Write("".PadRight(Console.WindowWidth - 1));
                 index++;
@@ -86,14 +91,17 @@ namespace cis237assignment2
         {
             Console.SetCursorPosition(1, 11);
 
+            // Reads in user's input.
             userInputString = Console.ReadLine().Trim().ToLower();
+
+            // Clears user's input out of UI.
             Console.SetCursorPosition(1, 11);
             Console.Write("".PadRight(Console.WindowWidth - 1));
             return userInputString;
         }
 
         /// <summary>
-        /// Display standard output to console.
+        /// Single line output to console.
         /// </summary>
         /// <param name="outputString">Output to display.</param>
         public static void Display(string outputString)
@@ -201,9 +209,9 @@ namespace cis237assignment2
         }
 
         /// <summary>
-        /// Clears unecessary display of errors.
+        /// Clears out UI single line display.
         /// </summary>
-        public static void RemoveError()
+        public static void RemoveDisplayLine()
         {
             Console.SetCursorPosition(0, 10);
             Console.Write("".PadRight(Console.WindowWidth - 1));

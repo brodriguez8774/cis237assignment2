@@ -95,31 +95,24 @@ namespace cis237assignment2
             switch (userInputString)
             {
                 case "1":
-                    UserInterface.RemoveError();
                     ChangeTileWidth();
                     break;
                 case "2":
-                    UserInterface.RemoveError();
                     ChangeTileSpacing();
                     break;
                 case "3":
-                    UserInterface.RemoveError();
                     ChangeStartingPosition();
                     break;
                 case "4":
-                    UserInterface.RemoveError();
                     ChangeDisplayTimer();
                     break;
                 case "5":
-                    UserInterface.RemoveError();
                     ChangeDisplayColorBool();
                     break;
                 case "6":
-                    UserInterface.RemoveError();
                     CloseMenu();
                     break;
                 case "esc":
-                    UserInterface.RemoveError();
                     CloseMenu();
                     break;
                 default:
@@ -133,6 +126,8 @@ namespace cis237assignment2
         /// </summary>
         private static void ChangeTileWidth()
         {
+            UserInterface.RemoveDisplayLine();
+
             UserInterface.Display("Width of each individual tile. Must be a number. Cannot go below 1.");
             userInputString = UserInterface.GetUserInput();
             
@@ -145,6 +140,7 @@ namespace cis237assignment2
                     // If input is greater than 0.
                     if (userInputInt > 0)
                     {
+                        UserInterface.RemoveDisplayLine();
                         mazeTileWidthInt = userInputInt;
                     }
                     else
@@ -164,11 +160,14 @@ namespace cis237assignment2
         /// </summary>
         private static void ChangeTileSpacing()
         {
+            UserInterface.RemoveDisplayLine();
             UserInterface.Display("Spacing between each tile. Must be a number. Cannot go negative.");
             userInputString = UserInterface.GetUserInput();
 
             try
             {
+                UserInterface.RemoveDisplayLine();
+
                 // Allows user to back out.
                 if (userInputString != "esc")
                 {
@@ -195,6 +194,7 @@ namespace cis237assignment2
         /// </summary>
         private static void ChangeStartingPosition()
         {
+            UserInterface.RemoveDisplayLine();
             // If premade maze.
             if (randomMazeBool == false)
             {
@@ -241,11 +241,15 @@ namespace cis237assignment2
         /// </summary>
         private static void ChangeDisplayTimer()
         {
+            UserInterface.RemoveDisplayLine();
+
             UserInterface.Display("Enter a non-negative number. Note: Input of 1000 equals 1 second.");
             userInputString = UserInterface.GetUserInput();
 
             try
             {
+                UserInterface.RemoveDisplayLine();
+
                 // Allows user to back out.
                 if (userInputString != "esc")
                 {
@@ -272,6 +276,8 @@ namespace cis237assignment2
         /// </summary>
         private static void ChangeDisplayColorBool()
         {
+            UserInterface.RemoveDisplayLine();
+
             if (displayColorsBool == true)
             {
                 displayColorsBool = false;
@@ -287,6 +293,8 @@ namespace cis237assignment2
         /// </summary>
         private static void CloseMenu()
         {
+            UserInterface.RemoveDisplayLine();
+
             runSettingsBool = false;
         }
 
@@ -302,7 +310,7 @@ namespace cis237assignment2
         /// </summary>
         public static void InitializeSettings()
         {
-            mazeTileSpacingInt = 1;
+            mazeTileSpacingInt = 0;
             mazeTileWidthInt = 2;
             userStartingXInt = 1;
             userStartingYInt = 1;

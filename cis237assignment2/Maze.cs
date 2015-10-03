@@ -442,7 +442,8 @@ namespace cis237assignment2
         }
 
         /// <summary>
-        /// Sends MazeSizeInt to UserInterface to reset current display of maze.
+        /// Resets current display of maze.
+        /// Note: Call this one. It will send mazeSizeInt to UserInterface.
         /// </summary>
         public void ResetMazeDisplay()
         {
@@ -474,9 +475,11 @@ namespace cis237assignment2
             UserInterface.Display("Enter size of maze: ");
             try
             {
+
                 // Assumes value user enters is the number of tiles INSIDE the outer walls.
                 // IE: if the user enters size "3", then the array will be a 5 x 5, including outer walls.
                 mazeSizeInt = Convert.ToInt32(UserInterface.GetUserInput()) + 2;
+                UserInterface.RemoveDisplayLine();
 
                 // Actually generate maze.
                 DetermineMazeStart();

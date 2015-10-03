@@ -70,19 +70,15 @@ namespace cis237assignment2
             switch (userInputString)
             {
                 case "1":
-                    UserInterface.RemoveError();
                     CreateMazeMenu();
                     break;
                 case "2":
-                    UserInterface.RemoveError();
                     DisplayMaze();
                     break;
                 case "3":
-                    UserInterface.RemoveError();
                     SolveMaze();
                     break;
                 case "4":
-                    UserInterface.RemoveError();
                     AdjustSettings();
                     break;
                 case "5":
@@ -102,78 +98,27 @@ namespace cis237assignment2
         /// </summary>
         private void CreateMazeMenu()
         {
+            UserInterface.RemoveDisplayLine();
+
             UserInterface.DisplayCreateMazeMenu();
             userInputString = UserInterface.GetUserInput();
 
             switch (userInputString)
             {
                 case "1":
-                    UserInterface.RemoveError();
-                    // If a maze was previously created.
-                    if (mazeCreatedBool)
-                    {
-                        maze.ResetMazeDisplay();
-                        maze.ReadMaze();
-                        newMazeBool = true;
-                    }
-                    else
-                    {
-                        maze.ReadMaze();
-                        newMazeBool = true;
-                        mazeCreatedBool = true;
-                    }
+                    CreatePremadeMaze();
                     break;
                 case "2":
-                    UserInterface.RemoveError();
-                    // If a maze was previously created.
-                    if (mazeCreatedBool)
-                    {
-                        maze.ResetMazeDisplay();
-                        maze.GenerateNewMaze();
-                        newMazeBool = true;
-                    }
-                    else
-                    {
-                        maze.GenerateNewMaze();
-                        newMazeBool = true;
-                        mazeCreatedBool = true;
-                    }
+                    CreateRandomMaze();
                     break;
                 case "3":
-                    UserInterface.RemoveError();
-                    if (maze != null)
-                    {
-                        maze.TransposeMazeDiagonal();
-                        newMazeBool = true;
-                    }
-                    else
-                    {
-                        UserInterface.DisplayError("Must create maze first.");
-                    }
+                    TransposeCurrentMazeDiagonal();
                     break;
                 case "4":
-                    UserInterface.RemoveError();
-                    if (maze != null)
-                    {
-                        maze.TransposeMazeHorizontal();
-                        newMazeBool = true;
-                    }
-                    else
-                    {
-                        UserInterface.DisplayError("Must create maze first.");
-                    }
+                    TransposeCurrentMazeHorizontal();
                     break;
                 case "5":
-                    UserInterface.RemoveError();
-                    if (maze != null)
-                    {
-                        maze.TransposeMazeVertical();
-                        newMazeBool = true;
-                    }
-                    else
-                    {
-                        UserInterface.DisplayError("Must create maze first.");
-                    }
+                    TransposeCurrentMazeVertical();
                     break;
                 case "esc":
                     break;
@@ -188,8 +133,13 @@ namespace cis237assignment2
         /// </summary>
         private void DisplayMaze()
         {
+            UserInterface.RemoveDisplayLine();
+
+            // If a maze has been created already.
             if (mazeCreatedBool)
             {
+                maze.ResetMazeDisplay();
+
                 // If maze currently unsolved.
                 if (newMazeBool == true)
                 {
@@ -213,6 +163,8 @@ namespace cis237assignment2
         /// </summary>
         private void SolveMaze()
         {
+            UserInterface.RemoveDisplayLine();
+
             // If a maze was created yet.
             if (mazeCreatedBool)
             {
@@ -241,6 +193,7 @@ namespace cis237assignment2
         /// </summary>
         private void AdjustSettings()
         {
+            UserInterface.RemoveDisplayLine();
             Settings.RunSettingsMenu();
         }
 
@@ -250,6 +203,104 @@ namespace cis237assignment2
         private void CloseProgram()
         {
             runProgramBool = false;
+        }
+
+        /// <summary>
+        /// Creates a maze from premade template.
+        /// </summary>
+        private void CreatePremadeMaze()
+        {
+            UserInterface.RemoveDisplayLine();
+
+            // If a maze was previously created.
+            if (mazeCreatedBool)
+            {
+                maze.ResetMazeDisplay();
+                maze.ReadMaze();
+                newMazeBool = true;
+            }
+            else
+            {
+                maze.ReadMaze();
+                newMazeBool = true;
+                mazeCreatedBool = true;
+            }
+        }
+
+        /// <summary>
+        /// Randomly generates a new maze. Displays entire generation of maze.
+        /// </summary>
+        private void CreateRandomMaze()
+        {
+            UserInterface.RemoveDisplayLine();
+
+            // If a maze was previously created.
+            if (mazeCreatedBool)
+            {
+                maze.ResetMazeDisplay();
+                maze.GenerateNewMaze();
+                newMazeBool = true;
+            }
+            else
+            {
+                maze.GenerateNewMaze();
+                newMazeBool = true;
+                mazeCreatedBool = true;
+            }
+        }
+
+        /// <summary>
+        /// Transposes (flips) current maze diagonally.
+        /// </summary>
+        private void TransposeCurrentMazeDiagonal()
+        {
+            UserInterface.RemoveDisplayLine();
+
+            if (maze != null)
+            {
+                maze.TransposeMazeDiagonal();
+                newMazeBool = true;
+            }
+            else
+            {
+                UserInterface.DisplayError("Must create maze first.");
+            }
+        }
+
+        /// <summary>
+        /// Transposes (flips) current maze horizontally (accross the y axis).
+        /// </summary>
+        private void TransposeCurrentMazeHorizontal()
+        {
+            UserInterface.RemoveDisplayLine();
+
+            if (maze != null)
+            {
+                maze.TransposeMazeHorizontal();
+                newMazeBool = true;
+            }
+            else
+            {
+                UserInterface.DisplayError("Must create maze first.");
+            }
+        }
+
+        /// <summary>
+        /// Transposes(flips) current maze vertically (accross the x axis).
+        /// </summary>
+        private void TransposeCurrentMazeVertical()
+        {
+            UserInterface.RemoveDisplayLine();
+
+            if (maze != null)
+            {
+                maze.TransposeMazeVertical();
+                newMazeBool = true;
+            }
+            else
+            {
+                UserInterface.DisplayError("Must create maze first.");
+            }
         }
 
         #endregion
