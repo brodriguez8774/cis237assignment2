@@ -25,10 +25,7 @@ namespace cis237assignment2
 
         public static string UserSelection
         {
-            get
-            {
-                return userInputString;
-            }
+            get { return userInputString; }
         }
 
         #endregion
@@ -43,9 +40,42 @@ namespace cis237assignment2
         /// <param name="mazeDisplayString">String representing maze to display.</param>
         public static void DisplayMaze(string mazeDisplayString)
         {
-            Console.WriteLine(Environment.NewLine + Environment.NewLine + Environment.NewLine +
-                Environment.NewLine + Environment.NewLine + Environment.NewLine + Environment.NewLine +
-                mazeDisplayString);
+            Console.SetCursorPosition(0, 12);
+
+            if (Settings.DisplayColors)
+            {
+                foreach (char character in mazeDisplayString)
+                {
+                    if (character == '#')
+                    {
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.Write(character);
+                        Console.ForegroundColor = ConsoleColor.Gray;
+                    }
+                    else
+                    {
+                        Console.Write(character);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine(mazeDisplayString);
+            }
+        }
+
+
+        public static void ResetMazeDisplay(int mazeSizeInt)
+        {
+            Console.SetCursorPosition(0, 12);
+
+            int index = 0;
+            while (index < mazeSizeInt)
+            {
+                Console.Write("".PadRight(Console.WindowWidth - 1));
+                index++;
+            }
+
         }
 
         /// <summary>
@@ -54,7 +84,11 @@ namespace cis237assignment2
         /// <returns>String of user's input.</returns>
         public static string GetUserInput()
         {
+            Console.SetCursorPosition(1, 11);
+
             userInputString = Console.ReadLine().Trim().ToLower();
+            Console.SetCursorPosition(1, 11);
+            Console.Write("".PadRight(Console.WindowWidth - 1));
             return userInputString;
         }
 
@@ -64,7 +98,9 @@ namespace cis237assignment2
         /// <param name="outputString">Output to display.</param>
         public static void Display(string outputString)
         {
-            Console.WriteLine(outputString);
+            Console.SetCursorPosition(1, 10);
+
+            Console.WriteLine(outputString.PadRight(Console.WindowWidth - 1));
         }
 
         /// <summary>
@@ -73,9 +109,19 @@ namespace cis237assignment2
         /// <param name="outputString">Error to output.</param>
         public static void DisplayError(string outputString)
         {
-            Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine(outputString);
-            Console.ForegroundColor = ConsoleColor.Gray;
+            Console.SetCursorPosition(1, 10);
+
+            // Checks if colors are enabled.
+            if (Settings.DisplayColors)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(outputString.PadRight(Console.WindowWidth - 1));
+                Console.ForegroundColor = ConsoleColor.Gray;
+            }
+            else
+            {
+                Console.WriteLine(outputString.PadRight(Console.WindowWidth - 1));
+            }
         }
 
         /// <summary>
@@ -83,30 +129,37 @@ namespace cis237assignment2
         /// </summary>
         public static void DisplayMainMenu()
         {
-            Console.WriteLine(Environment.NewLine + Environment.NewLine +
-                "   Choose an Option:" + "          Note:"+ Environment.NewLine +
-                "   ~~~~~~~~~~~~~~~~~" + "          You may type 'esc' at any point to back out." + Environment.NewLine +
-                "    1) Create Maze" + Environment.NewLine +
-                "    2) Display Maze" + Environment.NewLine +
-                "    3) Solve Maze" + Environment.NewLine +
-                "    4) Settings" + Environment.NewLine +
-                "    5) Exit" + Environment.NewLine);
+            Console.SetCursorPosition(0, 1);
+
+            Console.WriteLine(
+                "   Choose an Option:          Note:".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   ~~~~~~~~~~~~~~~~~          You may type 'esc' at any point to back out.".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   1) Create Maze".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   2) Display Maze".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   3) Solve Maze".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   4) Settings".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   5) Exit".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine);
         }
 
         /// <summary>
         /// Outputs Settings Menu to console.
         /// </summary>
-        public static void DisplaySettingsMenu(int mazeTileWidth, int mazeTileSpacing, string startingPositionString, int displayTimer)
+        public static void DisplaySettingsMenu()
         {
-            Console.WriteLine(Environment.NewLine + Environment.NewLine +
-                "   Choose an Option:" + "          Note:" + Environment.NewLine +
-                "   ~~~~~~~~~~~~~~~~~" + "          You may type 'esc' at any point to back out." + Environment.NewLine +
-                "                    " + "              Current Value: " + Environment.NewLine +
-                "   1) Width of each tile" + "          " + mazeTileWidth.ToString() + Environment.NewLine +
-                "   2) Space between each tile" + "     " + mazeTileSpacing.ToString() + Environment.NewLine +
-                "   3) Change Starting Postion" + "     " + startingPositionString + Environment.NewLine +
-                "   4) Adjust Display Timer" + "        " + displayTimer.ToString() + Environment.NewLine +
-                "   5) Exit" + Environment.NewLine);
+            Console.SetCursorPosition(0, 1);
+
+            Console.WriteLine(
+                "   Choose an Option:          Note:".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   ~~~~~~~~~~~~~~~~~          You may type 'esc' at any point to back out.".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "                                  ".PadRight((Console.WindowWidth - 1) / 2) + "Current Value: ".PadRight((Console.WindowWidth - 1) / 2) + Environment.NewLine +
+                "   1) Width of each tile          ".PadRight((Console.WindowWidth - 1) / 2) + Settings.TileWidth.ToString().PadRight((Console.WindowWidth - 1) / 2) + Environment.NewLine +
+                "   2) Space between each tile     ".PadRight((Console.WindowWidth - 1) / 2) + Settings.TileSpacing.ToString().PadRight((Console.WindowWidth - 1) / 2) + Environment.NewLine +
+                "   3) Change Starting Postion     ".PadRight((Console.WindowWidth - 1) / 2) + Settings.StartingString.PadRight((Console.WindowWidth - 1) / 2) + Environment.NewLine +
+                "   4) Adjust Display Timer        ".PadRight((Console.WindowWidth - 1) / 2) + Settings.DisplayTimer.ToString().PadRight((Console.WindowWidth - 1) / 2) + Environment.NewLine +
+                "   5) Display Colors:             ".PadRight((Console.WindowWidth - 1) / 2) + Settings.DisplayColors.ToString().PadRight((Console.WindowWidth - 1) / 2) + Environment.NewLine +
+                "   6) Exit".PadRight(Console.WindowWidth - 1) + Environment.NewLine);
         }
 
         /// <summary>
@@ -114,11 +167,18 @@ namespace cis237assignment2
         /// </summary>
         public static void DisplayStartingPostionMenu()
         {
-            Console.WriteLine(Environment.NewLine + Environment.NewLine +
-                "   1) Start at Top Left" + Environment.NewLine +
-                "   2) Start at Top Right" + Environment.NewLine +
-                "   3) Start at Bottom Left" + Environment.NewLine +
-                "   4) Start at Bottom Right" + Environment.NewLine);
+            Console.SetCursorPosition(0, 1);
+
+            Console.WriteLine(
+                "   Choose an Option:          Note:".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   ~~~~~~~~~~~~~~~~~          You may type 'esc' at any point to back out.".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   1) Start at Top Left".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   2) Start at Top Right".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   3) Start at Bottom Left".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   4) Start at Bottom Right".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine);
         }
 
         /// <summary>
@@ -126,11 +186,27 @@ namespace cis237assignment2
         /// </summary>
         public static void DisplayCreateMazeMenu()
         {
-            Console.WriteLine(Environment.NewLine + Environment.NewLine +
-                "   1) Standard Maze" + Environment.NewLine +
-                "   2) Transpose Maze Diagonally" + Environment.NewLine +
-                "   3) Transpose Maze Horizontally" + Environment.NewLine +
-                "   4) Transpose Maze Vertically" + Environment.NewLine);
+            Console.SetCursorPosition(0, 1);
+
+            Console.WriteLine(
+                "   Choose an Option:          Note:".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   ~~~~~~~~~~~~~~~~~          You may type 'esc' at any point to back out.".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   1) Standard Maze".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   2) Randomly Generated Maze".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   3) Transpose Maze Diagonally".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   4) Transpose Maze Horizontally".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "   5) Transpose Maze Vertically".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine +
+                "".PadRight(Console.WindowWidth - 1) + Environment.NewLine);
+        }
+
+        /// <summary>
+        /// Clears unecessary display of errors.
+        /// </summary>
+        public static void RemoveError()
+        {
+            Console.SetCursorPosition(0, 10);
+            Console.Write("".PadRight(Console.WindowWidth - 1));
         }
 
         #endregion

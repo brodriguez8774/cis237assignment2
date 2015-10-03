@@ -19,11 +19,10 @@ namespace cis237assignment2
         Maze maze;
         Character player;
 
-        bool runProgramBool;
-        bool newMazeBool;
-        int indexXInt;
-        int indexYInt;
+        bool runProgramBool;        // Keeps program loop running.
+        bool newMazeBool;           // Tests if maze is solved or new.
         string userInputString;
+        bool mazeCreatedBool;       // Stores if any maze has been made yet.
 
         #endregion
 
@@ -37,17 +36,16 @@ namespace cis237assignment2
         public RunProgram()
         {
             Settings.InitializeSettings();
+            maze = new Maze();
             runProgramBool = true;
             newMazeBool = false;
+            mazeCreatedBool = false;
 
             while (runProgramBool)
             {
                 UserInterface.DisplayMainMenu();
                 UserMenuSelection();
             }
-
-            //Testing newTest = new Testing();
-            //newTest.ForceTesting();
         }
 
         #endregion
@@ -68,20 +66,23 @@ namespace cis237assignment2
         private void UserMenuSelection()
         {
             userInputString = UserInterface.GetUserInput();
-            Console.WriteLine();
 
             switch (userInputString)
             {
                 case "1":
+                    UserInterface.RemoveError();
                     CreateMazeMenu();
                     break;
                 case "2":
+                    UserInterface.RemoveError();
                     DisplayMaze();
                     break;
                 case "3":
+                    UserInterface.RemoveError();
                     SolveMaze();
                     break;
                 case "4":
+                    UserInterface.RemoveError();
                     AdjustSettings();
                     break;
                 case "5":
@@ -107,23 +108,72 @@ namespace cis237assignment2
             switch (userInputString)
             {
                 case "1":
-                    maze = new Maze();
-                    newMazeBool = true;
+                    UserInterface.RemoveError();
+                    // If a maze was previously created.
+                    if (mazeCreatedBool)
+                    {
+                        maze.ResetMazeDisplay();
+                        maze.ReadMaze();
+                        newMazeBool = true;
+                    }
+                    else
+                    {
+                        maze.ReadMaze();
+                        newMazeBool = true;
+                        mazeCreatedBool = true;
+                    }
                     break;
                 case "2":
-                    maze = new Maze();
-                    maze.TransposeMazeDiagonal();
-                    newMazeBool = true;
+                    UserInterface.RemoveError();
+                    // If a maze was previously created.
+                    if (mazeCreatedBool)
+                    {
+                        maze.ResetMazeDisplay();
+                        maze.GenerateNewMaze();
+                        newMazeBool = true;
+                    }
+                    else
+                    {
+                        maze.GenerateNewMaze();
+                        newMazeBool = true;
+                        mazeCreatedBool = true;
+                    }
                     break;
                 case "3":
-                    maze = new Maze();
-                    maze.TransposeMazeHorizontal();
-                    newMazeBool = true;
+                    UserInterface.RemoveError();
+                    if (maze != null)
+                    {
+                        maze.TransposeMazeDiagonal();
+                        newMazeBool = true;
+                    }
+                    else
+                    {
+                        UserInterface.DisplayError("Must create maze first.");
+                    }
                     break;
                 case "4":
-                    maze = new Maze();
-                    maze.TransposeMazeVertical();
-                    newMazeBool = true;
+                    UserInterface.RemoveError();
+                    if (maze != null)
+                    {
+                        maze.TransposeMazeHorizontal();
+                        newMazeBool = true;
+                    }
+                    else
+                    {
+                        UserInterface.DisplayError("Must create maze first.");
+                    }
+                    break;
+                case "5":
+                    UserInterface.RemoveError();
+                    if (maze != null)
+                    {
+                        maze.TransposeMazeVertical();
+                        newMazeBool = true;
+                    }
+                    else
+                    {
+                        UserInterface.DisplayError("Must create maze first.");
+                    }
                     break;
                 case "esc":
                     break;
@@ -138,9 +188,19 @@ namespace cis237assignment2
         /// </summary>
         private void DisplayMaze()
         {
-            if (maze != null)
+            if (mazeCreatedBool)
             {
-                UserInterface.DisplayMaze(maze.MazeToString(maze, Settings.StartingY, Settings.StartingX));
+                // If maze currently unsolved.
+                if (newMazeBool == true)
+                {
+                    UserInterface.DisplayMaze(maze.MazeToString(maze, Settings.StartingY, Settings.StartingX));
+                }
+                else
+                {
+                    maze.RefreshMaze();
+                    newMazeBool = true;
+                    DisplayMaze();
+                }
             }
             else
             {
@@ -153,11 +213,22 @@ namespace cis237assignment2
         /// </summary>
         private void SolveMaze()
         {
-            if (maze != null && newMazeBool == true)
+            // If a maze was created yet.
+            if (mazeCreatedBool)
             {
-                player = new Character(maze);
-                player.MoveCharacter(0, Settings.StartingY, Settings.StartingX);
-                newMazeBool = false;
+                // If maze is currently unsolved.
+                if (newMazeBool == true)
+                {
+                    player = new Character(maze);
+                    player.MoveCharacter(0, Settings.StartingY, Settings.StartingX);
+                    newMazeBool = false;
+                }
+                else
+                {
+                    maze.RefreshMaze();
+                    newMazeBool = true;
+                    SolveMaze();
+                }
             }
             else
             {

@@ -8,11 +8,17 @@ Brandon Rodriguez
 
 Program which creates and solves a maze using recursion and an attempt at "self-updating entity" logic.
 
-User is given a menu. They can create new mazes (currently only derived from a premade one), display and solve the mazes, or adjust settings of the maze's display.
+User is given a menu. They can create new mazes (both premade and randomly generated), display and solve the mazes, or adjust settings of the maze's display.
 
 Each tile in the maze has its own properties, as opposed to just being a static char.
 
 The display is on a timer so that the user can watch while the character navigates to the exit. Character currently attempts to navigate in the following order: right, down, left, then up. Any tiles which have been passed over are marked with an X. Any tiles which have been determined to be a dead end are marked with an O.
+
+Things like console color, speed, and starting location can be turned off or toggled.
+
+The maze generation should work with all sizes (as long as it fits within the console window) and even shows user as it's being created. Is fully solve-able and can be transposed just like premade maze.
+
+UI is "static" in that it doesn't scroll like a standard console application.
 
 ## Project Requirements
 
@@ -46,8 +52,30 @@ http://www.dotnetperls.com/static-property
 * Learned how to create static properties. Prior to static properties, there were a few instances of creating an entire redundant class just go gain access to a single variable.
 
 http://www.dotnetperls.com/console-color
-* Learned how to output different console colors.
+http://stackoverflow.com/questions/10058854/look-at-each-character-in-a-string
+* Learned how to output different console colors and display different colors in the same string.
+
+https://msdn.microsoft.com/en-us/library/system.random%28v=vs.110%29.aspx
+* Brushing up on and learning more indepth intricacies of random number generation.
+
+https://en.wikipedia.org/wiki/Maze_generation_algorithm
+* Used in attempting to figure out random maze generation.
+
+http://stackoverflow.com/questions/748062/how-can-i-return-multiple-values-from-a-function-in-c
+https://msdn.microsoft.com/en-us/library/system.tuple%28v=vs.110%29.aspx
+* Learned how to return multiple values with a single method (used in maze gen).
+
+https://msdn.microsoft.com/en-us/library/xzcawzfw%28v=vs.90%29.aspx
+* Realized that in an if statment, "+1" and "++" behave differently
+* IE: "if (int + 1)" will just check for the int incrimented by one. "if (int++)" appears to both check for the incrimented int AND actually change all future references to that value as well.
+
+http://stackoverflow.com/questions/5435460/console-application-how-to-update-the-display-without-flicker
+https://msdn.microsoft.com/en-us/library/system.console.setcursorposition%28v=vs.110%29.aspx
+https://msdn.microsoft.com/en-us/library/system.console.windowwidth%28v=vs.110%29.aspx
+* Got rid of annoying console flickering when creating/solving a new maze! Yay!
 
 ## Known Problems, Issues, And/Or Errors in the Program
+
+*Maze generation works best when a larger size. The 10 to 20 tile range seems ideal.
 
 

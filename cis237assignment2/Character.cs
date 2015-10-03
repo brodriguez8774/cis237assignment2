@@ -58,34 +58,22 @@ namespace cis237assignment2
 
         public Maze Maze
         {
-            set
-            {
-                maze = value;
-            }
+            set { maze = value; }
         }
 
         public int CurrentX
         {
-            get
-            {
-                return currentXInt;
-            }
+            get { return currentXInt; }
         }
 
         public int CurrentY
         {
-            get
-            {
-                return currentYInt;
-            }
+            get { return currentYInt; }
         }
 
         public static char CharacterDisplay
         {
-            get
-            {
-                return tileDisplayChar;
-            }
+            get { return tileDisplayChar; }
         }
 
         #endregion

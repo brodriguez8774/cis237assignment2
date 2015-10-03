@@ -21,15 +21,16 @@ namespace cis237assignment2
         private static string userInputString;
         private static int userInputInt;
 
-        private static int mazeTileSpacingInt;             // Number of spaces between each tile. Cannot go negative.
-        private static int mazeTileWidthInt;               // Size of each individual tile. Cannot go below 1.
+        private static int mazeTileSpacingInt;              // Number of spaces between each tile. Cannot go negative.
+        private static int mazeTileWidthInt;                // Size of each individual tile. Cannot go below 1.
 
-        private static int userStartingXInt;               // Values for user's starting position.
+        private static int userStartingXInt;                // Values for user's starting position.
         private static int userStartingYInt;
+        private static bool randomMazeBool;                 // Prevents user from changing starting location if randomly generated.
         private static string userStartingString;
 
-        private static int displayTimerInt;                // Timer value for console delay.
-
+        private static int displayTimerInt;                 // Timer value for console delay.
+        private static bool displayColorsBool;
 
         #endregion
 
@@ -39,50 +40,42 @@ namespace cis237assignment2
 
         public static int TileSpacing
         {
-            get
-            {
-                return mazeTileSpacingInt;
-            }
+            get { return mazeTileSpacingInt; }
         }
 
         public static int TileWidth
         {
-            get
-            {
-                return mazeTileWidthInt;
-            }
+            get { return mazeTileWidthInt; }
         }
 
         public static int StartingX
         {
-            get
-            {
-                return userStartingXInt;
-            }
+            get { return userStartingXInt; }
         }
 
         public static int StartingY
         {
-            get
-            {
-                return userStartingYInt;
-            }
+            get { return userStartingYInt; }
         }
 
         public static string StartingString
         {
-            get
-            {
-                return userStartingString;
-            }
+            get { return userStartingString; }
         }
 
         public static int DisplayTimer
         {
-            get
-            {
-                return displayTimerInt;
-            }
+            get { return displayTimerInt; }
+        }
+
+        public static bool DisplayColors
+        {
+            get { return displayColorsBool; }
+        }
+
+        public static bool RandomMazeBool
+        {
+            get { return randomMazeBool; }
         }
 
         #endregion
@@ -102,21 +95,31 @@ namespace cis237assignment2
             switch (userInputString)
             {
                 case "1":
+                    UserInterface.RemoveError();
                     ChangeTileWidth();
                     break;
                 case "2":
+                    UserInterface.RemoveError();
                     ChangeTileSpacing();
                     break;
                 case "3":
+                    UserInterface.RemoveError();
                     ChangeStartingPosition();
                     break;
                 case "4":
+                    UserInterface.RemoveError();
                     ChangeDisplayTimer();
                     break;
                 case "5":
+                    UserInterface.RemoveError();
+                    ChangeDisplayColorBool();
+                    break;
+                case "6":
+                    UserInterface.RemoveError();
                     CloseMenu();
                     break;
                 case "esc":
+                    UserInterface.RemoveError();
                     CloseMenu();
                     break;
                 default:
@@ -192,36 +195,44 @@ namespace cis237assignment2
         /// </summary>
         private static void ChangeStartingPosition()
         {
-            UserInterface.DisplayStartingPostionMenu();
-            userInputString = UserInterface.GetUserInput();
-
-            switch (userInputString)
+            // If premade maze.
+            if (randomMazeBool == false)
             {
-                case "1":
-                    userStartingXInt = 1;
-                    userStartingYInt = 1;
-                    userStartingString = "Top Left";
-                    break;
-                case "2":
-                    userStartingXInt = 10;
-                    userStartingYInt = 1;
-                    userStartingString = "Top Right";
-                    break;
-                case "3":
-                    userStartingXInt = 1;
-                    userStartingYInt = 10;
-                    userStartingString = "Bottom Left";
-                    break;
-                case "4":
-                    userStartingXInt = 10;
-                    userStartingYInt = 10;
-                    userStartingString = "Bottom Right";
-                    break;
-                case "esc":
-                    break;
-                default:
-                    UserInterface.Display("Invalid selection.");
-                    break;
+                UserInterface.DisplayStartingPostionMenu();
+                userInputString = UserInterface.GetUserInput();
+
+                switch (userInputString)
+                {
+                    case "1":
+                        userStartingXInt = 1;
+                        userStartingYInt = 1;
+                        userStartingString = "Top Left";
+                        break;
+                    case "2":
+                        userStartingXInt = 10;
+                        userStartingYInt = 1;
+                        userStartingString = "Top Right";
+                        break;
+                    case "3":
+                        userStartingXInt = 1;
+                        userStartingYInt = 10;
+                        userStartingString = "Bottom Left";
+                        break;
+                    case "4":
+                        userStartingXInt = 10;
+                        userStartingYInt = 10;
+                        userStartingString = "Bottom Right";
+                        break;
+                    case "esc":
+                        break;
+                    default:
+                        UserInterface.Display("Invalid selection.");
+                        break;
+                }
+            }
+            else
+            {
+                UserInterface.DisplayError("Sorry. You can only change the starting location of premade mazes.");
             }
         }
 
@@ -257,6 +268,21 @@ namespace cis237assignment2
         }
 
         /// <summary>
+        /// Changes bool for displaying colors.
+        /// </summary>
+        private static void ChangeDisplayColorBool()
+        {
+            if (displayColorsBool == true)
+            {
+                displayColorsBool = false;
+            }
+            else
+            {
+                displayColorsBool = true;
+            }
+        }
+
+        /// <summary>
         /// Exits settings menu.
         /// </summary>
         private static void CloseMenu()
@@ -281,7 +307,9 @@ namespace cis237assignment2
             userStartingXInt = 1;
             userStartingYInt = 1;
             userStartingString = "Top Left";
-            displayTimerInt = 500;
+            displayTimerInt = 100;
+            randomMazeBool = false;
+            displayColorsBool = true;
         }
 
         /// <summary>
@@ -293,9 +321,31 @@ namespace cis237assignment2
 
             while (runSettingsBool)
             {
-                UserInterface.DisplaySettingsMenu(mazeTileWidthInt, mazeTileSpacingInt, userStartingString, displayTimerInt);
+                UserInterface.DisplaySettingsMenu();
                 UserMenuSelection();
             }
+        }
+
+        /// <summary>
+        /// Called from maze if creating a randomly generated maze.
+        /// </summary>
+        /// <param name="startingY">The maze's starting T location.</param>
+        /// <param name="startingX">The maze's starting X location.</param>
+        public static void RandomMazeStartingLocation(int startingY, int startingX)
+        {
+            userStartingXInt = startingX;
+            userStartingYInt = startingY;
+            randomMazeBool = true;
+        }
+
+        /// <summary>
+        /// Called from maze if creating a premade maze.
+        /// </summary>
+        public static void PremadeMazeStartingLocation()
+        {
+            userStartingXInt = 1;
+            userStartingYInt = 1;
+            randomMazeBool = false;
         }
 
         #endregion
