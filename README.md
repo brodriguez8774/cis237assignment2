@@ -81,3 +81,5 @@ https://msdn.microsoft.com/en-us/library/system.console.windowwidth%28v=vs.110%2
 * Depending on the version of windows, console may or may not display correctly when adjusting the tile width/space properties. For example, setting one of them to 3 and the other to 2 seems to display fine on windows 10. However you can only set one of them to 2 and the other to 1 (at most) to display properly on windows 8.
 
 * The conole maze-coloring seems to be slightly resource intensive? Or at least it displays slower than expected on lesser machines. If your maze is displaying slowly, try either turning off colors or lowering the timer display value (or both). These can both be accessed within settings.
+
+* In the current version of the program, the "display maze" option really is only useful for showing the original maze after having solved it. Otherwise the program now automatically updates display of maze, for the most part.
